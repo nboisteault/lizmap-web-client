@@ -12,8 +12,10 @@ import Util from './util.js';
 
 import WMSCapabilities from 'ol/format/WMSCapabilities';
 import WMTSCapabilities from 'ol/format/WMTSCapabilities';
-import TileLayer from 'ol/layer/Tile.js';
 import WMTS, {optionsFromCapabilities} from 'ol/source/WMTS.js';
+import {Image as ImageLayer, Tile as TileLayer} from 'ol/layer.js';
+import ImageWMS from 'ol/source/ImageWMS.js';
+import TileWMS from 'ol/source/TileWMS.js';
 
 class EventDispatcher {
   constructor() {
@@ -1082,29 +1084,59 @@ var lizMap = function() {
               }));
       }
       else if (layerConfig.type == 'layer') {
-          var wmsLayer = new OpenLayers.Layer.WMS(layerName,serviceUrl
-              ,layerWmsParams
-              ,{isBaseLayer:false
-               ,minScale:layerConfig.maxScale
-               ,maxScale:(layerConfig.minScale != null && layerConfig.minScale < 1) ? 1 : layerConfig.minScale
-               ,isVisible:(layerConfig.toggled=='True')
-               ,visibility:false
-               ,gutter:(layerConfig.cached == 'True') ? 0 : 5
-               ,buffer:0
-               ,transitionEffect:(layerConfig.singleTile == 'True')?'resize':null
-               ,removeBackBufferDelay:250
-               ,singleTile:(layerConfig.singleTile == 'True' || (layerConfig.cached == 'True' && !wmtsCapabilities))
-               ,ratio:1
-               ,order:getLayerOrder(layer)
-               ,attribution:layer.attribution
-              });
-          if ( layer.nestedLayers.length != 0 ) {
-              var scales = getLayerScale(layer,null,null);
-              wmsLayer.minScale = scales.maxScale;
-              wmsLayer.options.minScale = scales.maxScale;
-              wmsLayer.maxScale = scales.minScale;
-              wmsLayer.options.maxScale = scales.minScale;
-          }
+        var wmsLayer = null;
+
+        // TODO : resolution/scale
+        // Single tile
+        if(layerConfig.singleTile == 'True' || (layerConfig.cached == 'True' && !wmtsCapabilities)){
+          wmsLayer = new ImageLayer({
+            visible:false
+            ,isVisible:(layerConfig.toggled=='True')
+            ,source: new ImageWMS({
+              attributions: layer.attribution
+              ,url: serviceUrl
+              ,params: layerWmsParams
+              ,serverType: 'qgis'
+            })
+          });
+
+        }else{
+          wmsLayer = new TileLayer({
+            visible:false
+            ,isVisible:(layerConfig.toggled=='True')
+            ,source: new TileWMS({
+              attributions: layer.attribution
+              ,url: serviceUrl
+              ,params: layerWmsParams
+              ,serverType: 'qgis'
+            })
+          });
+        }
+          // var wmsLayer = new OpenLayers.Layer.WMS(layerName,serviceUrl
+          //     ,layerWmsParams
+          //     ,{isBaseLayer:false
+          //      ,minScale:layerConfig.maxScale
+          //      ,maxScale:(layerConfig.minScale != null && layerConfig.minScale < 1) ? 1 : layerConfig.minScale
+          //      ,isVisible:(layerConfig.toggled=='True')
+          //      ,visibility:false
+          //      ,gutter:(layerConfig.cached == 'True') ? 0 : 5
+          //      ,buffer:0
+          //      ,transitionEffect:(layerConfig.singleTile == 'True')?'resize':null
+          //      ,removeBackBufferDelay:250
+          //      ,singleTile:(layerConfig.singleTile == 'True' || (layerConfig.cached == 'True' && !wmtsCapabilities))
+          //      ,ratio:1
+          //      ,order:getLayerOrder(layer)
+          //      ,attribution:layer.attribution
+          //     });
+
+          // TODO
+          // if ( layer.nestedLayers.length != 0 ) {
+          //     var scales = getLayerScale(layer,null,null);
+          //     wmsLayer.minScale = scales.maxScale;
+          //     wmsLayer.options.minScale = scales.maxScale;
+          //     wmsLayer.maxScale = scales.minScale;
+          //     wmsLayer.options.maxScale = scales.minScale;
+          // }
           layers.push( wmsLayer );
       }
       // creating the layer tree because it's a group, has children and is not a base layer
