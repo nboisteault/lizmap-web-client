@@ -962,7 +962,7 @@ var lizMap = function() {
         styles = lizLayerStyles[ layerName ];
       }
       var layerWmsParams = {
-          layers:layer.name
+          layers:layer.Name
           ,styles: styles
           ,version:'1.3.0'
           ,exceptions:'application/vnd.ogc.se_inimage'
@@ -2489,15 +2489,16 @@ var lizMap = function() {
     layers.reverse();
     for (var i=0,len=layers.length; i<len; i++) {
       var l = layers[i];
-      l.units = projection.proj.units;
-      l.events.on({
-        loadstart: function(evt) {
-          $('#layer-'+evt.object.name+' span.loading').addClass('loadstart');
-        },
-        loadend: function(evt) {
-          $('#layer-'+evt.object.name+' span.loading').removeClass('loadstart');
-        }
-      });
+      // l.units = projection.proj.units;
+      // TODO : handle events on layers
+      // l.events.on({
+      //   loadstart: function(evt) {
+      //     $('#layer-'+evt.object.name+' span.loading').addClass('loadstart');
+      //   },
+      //   loadend: function(evt) {
+      //     $('#layer-'+evt.object.name+' span.loading').removeClass('loadstart');
+      //   }
+      // });
       // Add only layers with geometry
       var qgisName = null;
       if ( l.name in cleanNameMap )
@@ -2506,7 +2507,7 @@ var lizMap = function() {
       if ( qgisName )
           aConfig = config.layers[qgisName];
       if ( !aConfig )
-          aConfig = config.layers[l.params['LAYERS']];
+          aConfig = config.layers[l.getSource().getParams().layers];
       if ( !aConfig )
           aConfig = config.layers[l.name];
       if ( !aConfig )
@@ -2517,144 +2518,146 @@ var lizMap = function() {
         continue;
       }
       // Update singleTile layers
-      if( removeSingleTile && (l instanceof OpenLayers.Layer.WMS) && l.singleTile ) {
-          l.addOptions({singleTile:false, tileSize: replaceSingleTileSize});
-      }
+      // TODO : USEFUL ?
+      // if( removeSingleTile && (l instanceof OpenLayers.Layer.WMS) && l.singleTile ) {
+      //     l.addOptions({singleTile:false, tileSize: replaceSingleTileSize});
+      // }
       map.addLayer(l);
 
     }
 
     // Add Locate by layer
-    if ('locateByLayer' in config) {
-      var locateByLayerList = [];
-      for (var lname in config.locateByLayer) {
-        if ( 'order' in config.locateByLayer[lname] )
-          locateByLayerList[ config.locateByLayer[lname].order ] = lname;
-        else
-          locateByLayerList.push( lname );
-      }
-      var locateContent = [];
-      for (var l in locateByLayerList) {
-        var lname = locateByLayerList[l];
-        var lConfig = config.layers[lname];
-        var html = '<div class="locate-layer">';
-        html += '<select id="locate-layer-'+cleanName(lname)+'" class="label">';
-        html += '<option>'+lConfig.title+'...</option>';
-        html += '</select>';
-        html += '</div>';
-        //constructing the select
-        locateContent.push(html);
-      }
-      $('#locate .menu-content').html(locateContent.join('<hr/>'));
-      map.addLayer(new OpenLayers.Layer.Vector('locatelayer',{
-        styleMap: new OpenLayers.StyleMap({
-          pointRadius: 6,
-          fill: false,
-          stroke: true,
-          strokeWidth: 3,
-          strokeColor: 'yellow',
-          strokeOpacity: 0.8
-        })
-      }));
+    // TODO
+    // if ('locateByLayer' in config) {
+    //   var locateByLayerList = [];
+    //   for (var lname in config.locateByLayer) {
+    //     if ( 'order' in config.locateByLayer[lname] )
+    //       locateByLayerList[ config.locateByLayer[lname].order ] = lname;
+    //     else
+    //       locateByLayerList.push( lname );
+    //   }
+    //   var locateContent = [];
+    //   for (var l in locateByLayerList) {
+    //     var lname = locateByLayerList[l];
+    //     var lConfig = config.layers[lname];
+    //     var html = '<div class="locate-layer">';
+    //     html += '<select id="locate-layer-'+cleanName(lname)+'" class="label">';
+    //     html += '<option>'+lConfig.title+'...</option>';
+    //     html += '</select>';
+    //     html += '</div>';
+    //     //constructing the select
+    //     locateContent.push(html);
+    //   }
+    //   $('#locate .menu-content').html(locateContent.join('<hr/>'));
+    //   map.addLayer(new OpenLayers.Layer.Vector('locatelayer',{
+    //     styleMap: new OpenLayers.StyleMap({
+    //       pointRadius: 6,
+    //       fill: false,
+    //       stroke: true,
+    //       strokeWidth: 3,
+    //       strokeColor: 'yellow',
+    //       strokeOpacity: 0.8
+    //     })
+    //   }));
 
-        // Lizmap URL
-        var service = Util.urlAppend(lizUrls.wms
-                ,Util.getParameterString(lizUrls.params)
-        );
+    //     // Lizmap URL
+    //     var service = Util.urlAppend(lizUrls.wms
+    //             ,Util.getParameterString(lizUrls.params)
+    //     );
 
-        var featureTypes = getVectorLayerFeatureTypes();
-        if (featureTypes.length == 0 ){
-          config.locateByLayer = {};
-          $('#button-locate').parent().remove();
-          $('#locate-menu').remove();
-          updateSwitcherSize();
-        } else {
-          featureTypes.each( function(){
-            var self = $(this);
-            var typeName = self.find('Name').text();
-            var lname = lizMap.getNameByTypeName( typeName );
-            if ( !lname ) {
-                if (typeName in config.locateByLayer)
-                    lname = typeName
-                else if ( (typeName in shortNameMap) && (shortNameMap[typeName] in config.locateByLayer))
-                    lname = shortNameMap[typeName];
-                else {
-                    for (lbl in config.locateByLayer) {
-                        if (lbl.split(' ').join('_') == typeName) {
-                            lname = lbl;
-                            break;
-                        }
-                    }
-                }
-            }
+    //     var featureTypes = getVectorLayerFeatureTypes();
+    //     if (featureTypes.length == 0 ){
+    //       config.locateByLayer = {};
+    //       $('#button-locate').parent().remove();
+    //       $('#locate-menu').remove();
+    //       updateSwitcherSize();
+    //     } else {
+    //       featureTypes.each( function(){
+    //         var self = $(this);
+    //         var typeName = self.find('Name').text();
+    //         var lname = lizMap.getNameByTypeName( typeName );
+    //         if ( !lname ) {
+    //             if (typeName in config.locateByLayer)
+    //                 lname = typeName
+    //             else if ( (typeName in shortNameMap) && (shortNameMap[typeName] in config.locateByLayer))
+    //                 lname = shortNameMap[typeName];
+    //             else {
+    //                 for (lbl in config.locateByLayer) {
+    //                     if (lbl.split(' ').join('_') == typeName) {
+    //                         lname = lbl;
+    //                         break;
+    //                     }
+    //                 }
+    //             }
+    //         }
 
-            if ( !(lname in config.locateByLayer) )
-                return;
+    //         if ( !(lname in config.locateByLayer) )
+    //             return;
 
-            var locate = config.locateByLayer[lname];
-            locate['crs'] = self.find('SRS').text();
-            loadProjDefinition( locate.crs, function( aProj ) {
-                new OpenLayers.Projection(locate.crs);
-            });
-            var bbox = self.find('LatLongBoundingBox');
-            locate['bbox'] = [
-                parseFloat(bbox.attr('minx'))
-               ,parseFloat(bbox.attr('miny'))
-               ,parseFloat(bbox.attr('maxx'))
-               ,parseFloat(bbox.attr('maxy'))
-            ];
-          } );
+    //         var locate = config.locateByLayer[lname];
+    //         locate['crs'] = self.find('SRS').text();
+    //         loadProjDefinition( locate.crs, function( aProj ) {
+    //             new OpenLayers.Projection(locate.crs);
+    //         });
+    //         var bbox = self.find('LatLongBoundingBox');
+    //         locate['bbox'] = [
+    //             parseFloat(bbox.attr('minx'))
+    //            ,parseFloat(bbox.attr('miny'))
+    //            ,parseFloat(bbox.attr('maxx'))
+    //            ,parseFloat(bbox.attr('maxy'))
+    //         ];
+    //       } );
 
-          // get joins
-          for (var lName in config.locateByLayer) {
-            var locate = config.locateByLayer[lName];
-            if ('vectorjoins' in locate && locate['vectorjoins'].length != 0) {
-              var vectorjoin = locate['vectorjoins'][0];
-              locate['joinFieldName'] = vectorjoin['targetFieldName'];
-              for (var jName in config.locateByLayer) {
-                var jLocate = config.locateByLayer[jName];
-                if (jLocate.layerId == vectorjoin.joinLayerId) {
-                  vectorjoin['joinLayer'] = jName;
-                  locate['joinLayer'] = jName;
-                  jLocate['joinFieldName'] = vectorjoin['joinFieldName'];
-                  jLocate['joinLayer'] = lName;
-                  jLocate['filterjoins'] = [{
-                      'targetFieldName': vectorjoin['joinFieldName'],
-                      'joinFieldName': vectorjoin['targetFieldName'],
-                      'joinLayerId': locate.layerId,
-                      'joinLayer': lName
-                  }];
-                }
-              }
-            }
-          }
+    //       // get joins
+    //       for (var lName in config.locateByLayer) {
+    //         var locate = config.locateByLayer[lName];
+    //         if ('vectorjoins' in locate && locate['vectorjoins'].length != 0) {
+    //           var vectorjoin = locate['vectorjoins'][0];
+    //           locate['joinFieldName'] = vectorjoin['targetFieldName'];
+    //           for (var jName in config.locateByLayer) {
+    //             var jLocate = config.locateByLayer[jName];
+    //             if (jLocate.layerId == vectorjoin.joinLayerId) {
+    //               vectorjoin['joinLayer'] = jName;
+    //               locate['joinLayer'] = jName;
+    //               jLocate['joinFieldName'] = vectorjoin['joinFieldName'];
+    //               jLocate['joinLayer'] = lName;
+    //               jLocate['filterjoins'] = [{
+    //                   'targetFieldName': vectorjoin['joinFieldName'],
+    //                   'joinFieldName': vectorjoin['targetFieldName'],
+    //                   'joinLayerId': locate.layerId,
+    //                   'joinLayer': lName
+    //               }];
+    //             }
+    //           }
+    //         }
+    //       }
 
-          // get locate by layers features
-          for (var lname in config.locateByLayer) {
-            getLocateFeature(lname);
-          }
-          $('.btn-locate-clear').click(function() {
-            console.log("test locate clear");
-            var layer = map.getLayersByName('locatelayer')[0];
-            layer.destroyFeatures();
-            $('#locate select').val('-1');
-            $('div.locate-layer span > input').val('');
+    //       // get locate by layers features
+    //       for (var lname in config.locateByLayer) {
+    //         getLocateFeature(lname);
+    //       }
+    //       $('.btn-locate-clear').click(function() {
+    //         console.log("test locate clear");
+    //         var layer = map.getLayersByName('locatelayer')[0];
+    //         layer.destroyFeatures();
+    //         $('#locate select').val('-1');
+    //         $('div.locate-layer span > input').val('');
 
-            if( lizMap.lizmapLayerFilterActive ){
-                lizMap.events.triggerEvent('lizmaplocatefeaturecanceled',
-                  {'featureType': lizMap.lizmapLayerFilterActive}
-                );
-            }
-            return false;
+    //         if( lizMap.lizmapLayerFilterActive ){
+    //             lizMap.events.triggerEvent('lizmaplocatefeaturecanceled',
+    //               {'featureType': lizMap.lizmapLayerFilterActive}
+    //             );
+    //         }
+    //         return false;
 
-          });
-          $('#locate-close').click(function() {
-            $('.btn-locate-clear').click(); // deactivate locate and filter
-            $('#button-locate').click();
-            return false;
-          });
-        }
-    }
+    //       });
+    //       $('#locate-close').click(function() {
+    //         $('.btn-locate-clear').click(); // deactivate locate and filter
+    //         $('#button-locate').click();
+    //         return false;
+    //       });
+    //     }
+    // }
 
     $('#switcher span.label').tooltip({
       viewport: '#dock'
