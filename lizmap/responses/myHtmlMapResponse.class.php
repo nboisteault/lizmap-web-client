@@ -50,15 +50,15 @@ class myHtmlMapResponse extends jResponseHtml
         $this->addHeadContent('<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />');
 
         // JS
-        $this->addJSLink($bp.'OpenLayers-2.13/OpenLayers.js');
-        $this->addJSLink($bp.'OpenLayers-2.13/lib/OpenLayers/Format/XML.js');
-        $this->addJSLink($bp.'OpenLayers-2.13/lib/OpenLayers/Format/SLD/v1_1_0.js');
-        $this->addJSLink($bp.'OpenLayers-2.13/lib/OpenLayers/Geometry/Polygon.js');
-        $this->addJSLink($bp.'OpenLayers-2.13/lib/OpenLayers/Control/Attribution.js'); // Comes from OpenLayers master
-        $this->addJSLink($bp.'OpenLayers-2.13/lib/OpenLayers/Control/Scale.js');
-        $this->addJSLink($bp.'OpenLayers-2.13/lib/OpenLayers/Control/ScaleLine.js');
-        $this->addJSLink($bp.'OpenLayers-2.13/lib/OpenLayers/Control/lizmapMousePosition.js');
-        $this->addJSLink($bp.'OpenLayers-2.13/lib/OpenLayers/Popup/lizmapAnchored.js');
+        // $this->addJSLink($bp.'OpenLayers-2.13/OpenLayers.js');
+        // $this->addJSLink($bp.'OpenLayers-2.13/lib/OpenLayers/Format/XML.js');
+        // $this->addJSLink($bp.'OpenLayers-2.13/lib/OpenLayers/Format/SLD/v1_1_0.js');
+        // $this->addJSLink($bp.'OpenLayers-2.13/lib/OpenLayers/Geometry/Polygon.js');
+        // $this->addJSLink($bp.'OpenLayers-2.13/lib/OpenLayers/Control/Attribution.js'); // Comes from OpenLayers master
+        // $this->addJSLink($bp.'OpenLayers-2.13/lib/OpenLayers/Control/Scale.js');
+        // $this->addJSLink($bp.'OpenLayers-2.13/lib/OpenLayers/Control/ScaleLine.js');
+        // $this->addJSLink($bp.'OpenLayers-2.13/lib/OpenLayers/Control/lizmapMousePosition.js');
+        // $this->addJSLink($bp.'OpenLayers-2.13/lib/OpenLayers/Popup/lizmapAnchored.js');
         $this->addJSLink($bp.'Proj4js/proj4js.min.js');
         $this->addJSLink(jApp::config()->jquery['jquery']);
         $js = jApp::config()->jquery['jqueryui.js'];
