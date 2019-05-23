@@ -378,8 +378,10 @@ var lizMap = function() {
 
     $('#dock').css('overflow-y', 'hidden');
 
-    if(map)
-      updateMapSize();
+    // TODO
+    // if(map){
+    //   updateMapSize();
+    // }
 
   }
 
@@ -1492,9 +1494,11 @@ var lizMap = function() {
     map = new Map({
       layers: [
         new TileLayer({
-          source: new OSM()
+          source: new OSM(),
+          baseLayer: true
         })
       ],
+      controls: [],
       target: 'map',
       view: new View({
         center: [0, 0],
@@ -2827,16 +2831,17 @@ var lizMap = function() {
     });
     $('#navbar button.zoom-in')
     .click(function(){
-      if (map.getZoom() == map.baseLayer.numZoomLevels-1)
-          $('#zoom-in-max-msg').show('slow', function() {
-            window.setTimeout(function(){$('#zoom-in-max-msg').hide('slow')},1000)
-          });
-      else
-        map.zoomIn();
+      // TODO
+      // if (map.getView().getZoom() == map.baseLayer.numZoomLevels-1)
+      //     $('#zoom-in-max-msg').show('slow', function() {
+      //       window.setTimeout(function(){$('#zoom-in-max-msg').hide('slow')},1000)
+      //     });
+      // else
+        map.getView().setZoom(map.getView().getZoom()+1);
     });
     $('#navbar button.zoom-out')
     .click(function(){
-      map.zoomOut();
+      map.getView().setZoom(map.getView().getZoom()-1);
     });
     if ( ('zoomHistory' in config.options)
         && config.options['zoomHistory'] == "True") {
@@ -6514,7 +6519,7 @@ OpenLayers.Control.HighlightFeature = OpenLayers.Class(OpenLayers.Control, {
           // createOverview();
 
           // create navigation and toolbar
-          // createNavbar();
+          createNavbar();
           // createToolbar();
           // self.events.triggerEvent("toolbarcreated", self);
 
