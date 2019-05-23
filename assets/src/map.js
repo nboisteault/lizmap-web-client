@@ -10,12 +10,15 @@
 
 import Util from './util.js';
 
+import Map from 'ol/Map.js';
+import View from 'ol/View.js';
 import WMSCapabilities from 'ol/format/WMSCapabilities';
 import WMTSCapabilities from 'ol/format/WMTSCapabilities';
 import WMTS, {optionsFromCapabilities} from 'ol/source/WMTS.js';
 import {Image as ImageLayer, Tile as TileLayer} from 'ol/layer.js';
 import ImageWMS from 'ol/source/ImageWMS.js';
 import TileWMS from 'ol/source/TileWMS.js';
+import OSM from 'ol/source/OSM';
 
 class EventDispatcher {
   constructor() {
@@ -1318,203 +1321,186 @@ var lizMap = function() {
     return html;
   }
 
-  function initProjections(firstLayer) {
-    // Insert or update projection liste
-    if ( lizProj4 ) {
-        for( var ref in lizProj4 ) {
-            if ( !(ref in Proj4js.defs) ) {
-              Proj4js.defs[ref]=lizProj4[ref];
-          }
-        }
-    }
-
-    // get and define projection
-    var proj = config.options.projection;
-    if ( !(proj.ref in Proj4js.defs) )
-      Proj4js.defs[proj.ref]=proj.proj4;
-    var projection = new OpenLayers.Projection(proj.ref);
-
-    if ( !(proj.ref in OpenLayers.Projection.defaults) ) {
-        OpenLayers.Projection.defaults[proj.ref] = projection;
-
-        // test extent for inverted axis
-        if ( proj.ref in firstLayer.bbox ) {
-            var wmsBbox = firstLayer.bbox[proj.ref].bbox;
-            var wmsBounds = OpenLayers.Bounds.fromArray( wmsBbox );
-            var initBounds = OpenLayers.Bounds.fromArray( config.options.initialExtent );
-            if ( !initBounds.intersectsBounds( wmsBounds ) )
-                OpenLayers.Projection.defaults[proj.ref].yx = true;
-        }
-    }
-  }
-
   /**
    * PRIVATE function: createMap
    * creating the map {<OpenLayers.Map>}
    */
   function createMap() {
-    // get projection
-    var proj = config.options.projection;
-    var projection = new OpenLayers.Projection(proj.ref);
+  //   // get projection
+  //   var proj = config.options.projection;
+  //   var projection = new OpenLayers.Projection(proj.ref);
 
-    // get and define the max extent
-    var bbox = config.options.bbox;
-    var extent = new OpenLayers.Bounds(Number(bbox[0]),Number(bbox[1]),Number(bbox[2]),Number(bbox[3]));
+  //   // get and define the max extent
+  //   var bbox = config.options.bbox;
+  //   var extent = new OpenLayers.Bounds(Number(bbox[0]),Number(bbox[1]),Number(bbox[2]),Number(bbox[3]));
 
-    var restrictedExtent = extent.scale(3);
-    var initialExtent = extent.clone();
-    if ( 'initialExtent' in config.options && config.options.initialExtent.length == 4 ) {
-      var initBbox = config.options.initialExtent;
-      initialExtent = new OpenLayers.Bounds(Number(initBbox[0]),Number(initBbox[1]),Number(initBbox[2]),Number(initBbox[3]));
-    }
+  //   var restrictedExtent = extent.scale(3);
+  //   var initialExtent = extent.clone();
+  //   if ( 'initialExtent' in config.options && config.options.initialExtent.length == 4 ) {
+  //     var initBbox = config.options.initialExtent;
+  //     initialExtent = new OpenLayers.Bounds(Number(initBbox[0]),Number(initBbox[1]),Number(initBbox[2]),Number(initBbox[3]));
+  //   }
 
-    // calculate the map height
-    var mapHeight = $('body').parent()[0].clientHeight;
-    if(!mapHeight)
-        mapHeight = $('window').innerHeight();
-    mapHeight = mapHeight - $('#header').height();
-    mapHeight = mapHeight - $('#headermenu').height();
-    $('#map').height(mapHeight);
+  //   // calculate the map height
+  //   var mapHeight = $('body').parent()[0].clientHeight;
+  //   if(!mapHeight)
+  //       mapHeight = $('window').innerHeight();
+  //   mapHeight = mapHeight - $('#header').height();
+  //   mapHeight = mapHeight - $('#headermenu').height();
+  //   $('#map').height(mapHeight);
 
-    // Make sure interface divs size are updated before creating the map
-    // This avoid the request of each singlettile layer 2 times on startup
-    updateContentSize();
+  //   // Make sure interface divs size are updated before creating the map
+  //   // This avoid the request of each singlettile layer 2 times on startup
+  //   updateContentSize();
 
-    var res = extent.getHeight()/$('#map').height();
+  //   var res = extent.getHeight()/$('#map').height();
 
-    var scales = [];
-    var resolutions = [];
-    if ('resolutions' in config.options)
-      resolutions = config.options.resolutions;
-    else if ('mapScales' in config.options)
-      scales = config.options.mapScales;
-    scales.sort(function(a, b) {
-      return Number(b) - Number(a);
+  //   var scales = [];
+  //   var resolutions = [];
+  //   if ('resolutions' in config.options)
+  //     resolutions = config.options.resolutions;
+  //   else if ('mapScales' in config.options)
+  //     scales = config.options.mapScales;
+  //   scales.sort(function(a, b) {
+  //     return Number(b) - Number(a);
+  //   });
+  //   // remove duplicate scales
+  //   nScales = [];
+  //   while (scales.length != 0){
+  //     var scale = scales.pop(0);
+  //     if ($.inArray( scale, nScales ) == -1 )
+  //       nScales.push( scale );
+  //   }
+  //   scales = nScales;
+
+
+  //   // creating the map
+  //   OpenLayers.Util.IMAGE_RELOAD_ATTEMPTS = 3; // Avoid some issues with tiles not displayed
+  //   OpenLayers.IMAGE_RELOAD_ATTEMPTS = 3;
+  //   OpenLayers.Util.DEFAULT_PRECISION=20; // default is 14 : change needed to avoid rounding problem with cache
+
+  //   map = new OpenLayers.Map('map'
+  //     ,{
+  //       controls:[
+  //         new OpenLayers.Control.Navigation({mouseWheelOptions: {interval: 100}})
+  //       ]
+  //       ,tileManager: null // prevent bug with OL 2.13 : white tiles on panning back
+  //       ,eventListeners:{
+  //        zoomend: function(evt){
+  // // private treeTable
+  // var options = {
+  //   childPrefix : "child-of-"
+  // };
+
+  // function childrenOf(node) {
+  //   return $(node).siblings("tr." + options.childPrefix + node[0].id);
+  // };
+
+  // function descendantsOf(node) {
+  //   var descendants = [];
+  //   var children = [];
+  //   if (node && node[0])
+  //     children = childrenOf(node);
+  //   for (var i=0, len=children.length; i<len; i++) {
+  //     descendants.push(children[i]);
+  //     descendants = descendants.concat(descendantsOf([children[i]]));
+  //   }
+  //   return descendants;
+  // };
+
+  // function parentOf(node) {
+  //   if (node.length == 0 )
+  //     return null;
+
+  //   var classNames = node[0].className.split(' ');
+
+  //   for(var key=0; key<classNames.length; key++) {
+  //     if(classNames[key].match(options.childPrefix)) {
+  //       return $(node).siblings("#" + classNames[key].substring(options.childPrefix.length));
+  //     }
+  //   }
+
+  //   return null;
+  // };
+
+  // function ancestorsOf(node) {
+  //   var ancestors = [];
+  //   while(node = parentOf(node)) {
+  //     ancestors[ancestors.length] = node[0];
+  //   }
+  //   return ancestors;
+  // };
+  //          //layer visibility
+  //          for (var i=0,len=layers.length; i<len; i++) {
+  //            var layer = layers[i];
+  //            var b = $('#switcher button[name="layer"][value="'+layer.name+'"]').first();
+
+  //            if (layer.inRange && b.hasClass('disabled')) {
+  //              var tr = b.parents('tr').first();
+  //              tr.removeClass('disabled').find('button').removeClass('disabled');
+  //              var ancestors = ancestorsOf(tr);
+  //              $.each(ancestors,function(i,a) {
+  //                $(a).removeClass('disabled').find('button').removeClass('disabled');
+  //              });
+  //              if (tr.find('button[name="layer"]').hasClass('checked'))
+  //                layer.setVisibility(true);
+  //            } else if (!layer.inRange && !b.hasClass('disabled')) {
+  //              var tr = b.parents('tr').first();
+  //              tr.addClass('disabled').find('button').addClass('disabled');
+  //              if (tr.hasClass('liz-layer'))
+  //                tr.collapse();
+  //              var ancestors = ancestorsOf(tr);
+  //              $.each(ancestors,function(i,a) {
+  //                   a = $(a);
+  //                   var count = 0;
+  //                   var checked = 0;
+  //                   var aDesc = childrenOf(a);
+  //                   $.each(aDesc,function(j,trd) {
+  //                     $(trd).find('button.checkbox').each(function(i,b){
+  //                       if ($(b).hasClass('disabled'))
+  //                         checked++;
+  //                       count++;
+  //                     });
+  //                   });
+  //                if (count == checked)
+  //                  a.addClass('disabled').find('button').addClass('disabled');
+  //                else
+  //                  a.removeClass('disabled').find('button').removeClass('disabled');
+  //              });
+  //            }
+  //          }
+
+  //          //pan button
+  //          $('#navbar button.pan').click();
+  //        }
+  //       }
+
+  //      ,maxExtent:extent
+  //      ,restrictedExtent: restrictedExtent
+  //      ,initialExtent:initialExtent
+  //      ,maxScale: scales.length == 0 ? config.options.minScale : "auto"
+  //      ,minScale: scales.length == 0 ? config.options.maxScale : "auto"
+  //      ,numZoomLevels: scales.length == 0 ? config.options.zoomLevelNumber : scales.length
+  //      ,scales: scales.length == 0 ? null : scales
+  //      ,resolutions: resolutions.length == 0 ? null : resolutions
+  //      ,projection:projection
+  //      ,units:projection.proj.units
+  //      ,allOverlays:(baselayers.length == 0)
+  //   });
+  //   map.addControl(new OpenLayers.Control.Attribution({div:document.getElementById('attribution')}));
+
+    map = new Map({
+      layers: [
+        new TileLayer({
+          source: new OSM()
+        })
+      ],
+      target: 'map',
+      view: new View({
+        center: [0, 0],
+        zoom: 2
+      })
     });
-    // remove duplicate scales
-    nScales = [];
-    while (scales.length != 0){
-      var scale = scales.pop(0);
-      if ($.inArray( scale, nScales ) == -1 )
-        nScales.push( scale );
-    }
-    scales = nScales;
-
-
-    // creating the map
-    OpenLayers.Util.IMAGE_RELOAD_ATTEMPTS = 3; // Avoid some issues with tiles not displayed
-    OpenLayers.IMAGE_RELOAD_ATTEMPTS = 3;
-    OpenLayers.Util.DEFAULT_PRECISION=20; // default is 14 : change needed to avoid rounding problem with cache
-
-    map = new OpenLayers.Map('map'
-      ,{
-        controls:[
-          new OpenLayers.Control.Navigation({mouseWheelOptions: {interval: 100}})
-        ]
-        ,tileManager: null // prevent bug with OL 2.13 : white tiles on panning back
-        ,eventListeners:{
-         zoomend: function(evt){
-  // private treeTable
-  var options = {
-    childPrefix : "child-of-"
-  };
-
-  function childrenOf(node) {
-    return $(node).siblings("tr." + options.childPrefix + node[0].id);
-  };
-
-  function descendantsOf(node) {
-    var descendants = [];
-    var children = [];
-    if (node && node[0])
-      children = childrenOf(node);
-    for (var i=0, len=children.length; i<len; i++) {
-      descendants.push(children[i]);
-      descendants = descendants.concat(descendantsOf([children[i]]));
-    }
-    return descendants;
-  };
-
-  function parentOf(node) {
-    if (node.length == 0 )
-      return null;
-
-    var classNames = node[0].className.split(' ');
-
-    for(var key=0; key<classNames.length; key++) {
-      if(classNames[key].match(options.childPrefix)) {
-        return $(node).siblings("#" + classNames[key].substring(options.childPrefix.length));
-      }
-    }
-
-    return null;
-  };
-
-  function ancestorsOf(node) {
-    var ancestors = [];
-    while(node = parentOf(node)) {
-      ancestors[ancestors.length] = node[0];
-    }
-    return ancestors;
-  };
-           //layer visibility
-           for (var i=0,len=layers.length; i<len; i++) {
-             var layer = layers[i];
-             var b = $('#switcher button[name="layer"][value="'+layer.name+'"]').first();
-
-             if (layer.inRange && b.hasClass('disabled')) {
-               var tr = b.parents('tr').first();
-               tr.removeClass('disabled').find('button').removeClass('disabled');
-               var ancestors = ancestorsOf(tr);
-               $.each(ancestors,function(i,a) {
-                 $(a).removeClass('disabled').find('button').removeClass('disabled');
-               });
-               if (tr.find('button[name="layer"]').hasClass('checked'))
-                 layer.setVisibility(true);
-             } else if (!layer.inRange && !b.hasClass('disabled')) {
-               var tr = b.parents('tr').first();
-               tr.addClass('disabled').find('button').addClass('disabled');
-               if (tr.hasClass('liz-layer'))
-                 tr.collapse();
-               var ancestors = ancestorsOf(tr);
-               $.each(ancestors,function(i,a) {
-                    a = $(a);
-                    var count = 0;
-                    var checked = 0;
-                    var aDesc = childrenOf(a);
-                    $.each(aDesc,function(j,trd) {
-                      $(trd).find('button.checkbox').each(function(i,b){
-                        if ($(b).hasClass('disabled'))
-                          checked++;
-                        count++;
-                      });
-                    });
-                 if (count == checked)
-                   a.addClass('disabled').find('button').addClass('disabled');
-                 else
-                   a.removeClass('disabled').find('button').removeClass('disabled');
-               });
-             }
-           }
-
-           //pan button
-           $('#navbar button.pan').click();
-         }
-        }
-
-       ,maxExtent:extent
-       ,restrictedExtent: restrictedExtent
-       ,initialExtent:initialExtent
-       ,maxScale: scales.length == 0 ? config.options.minScale : "auto"
-       ,minScale: scales.length == 0 ? config.options.maxScale : "auto"
-       ,numZoomLevels: scales.length == 0 ? config.options.zoomLevelNumber : scales.length
-       ,scales: scales.length == 0 ? null : scales
-       ,resolutions: resolutions.length == 0 ? null : resolutions
-       ,projection:projection
-       ,units:projection.proj.units
-       ,allOverlays:(baselayers.length == 0)
-    });
-    map.addControl(new OpenLayers.Control.Attribution({div:document.getElementById('attribution')}));
 
     // add handler to update the map size
     $(window).resize(function() {
@@ -2405,28 +2391,29 @@ var lizMap = function() {
     var projection = map.projection;
 
     //manage WMS max width and height
-    var wmsMaxWidth = 3000;
-    var wmsMaxHeight = 3000;
-    if( ('wmsMaxWidth' in config.options) && config.options.wmsMaxWidth )
-        wmsMaxWidth = Number(config.options.wmsMaxWidth);
-    if( ('wmsMaxHeight' in config.options) && config.options.wmsMaxHeight )
-        wmsMaxHeight = Number(config.options.wmsMaxHeight);
-    var removeSingleTile = false;
-    var mapSize = map.size;
-    var replaceSingleTileSize = new OpenLayers.Size(wmsMaxWidth, wmsMaxHeight);
-    if( mapSize.w > wmsMaxWidth || mapSize.h > wmsMaxHeight ){
-        removeSingleTile = true;
-        var wmsMaxMax = Math.max(wmsMaxWidth, wmsMaxHeight);
-        var wmsMinMax = Math.min(wmsMaxWidth, wmsMaxHeight);
-        var mapMax = Math.max(mapSize.w, mapSize.h);
-        var mapMin = Math.min(mapSize.w, mapSize.h);
-        if( mapMax/2 > mapMin )
-          replaceSingleTileSize = new OpenLayers.Size(Math.round(mapMax/2), Math.round(mapMax/2));
-        else if( wmsMaxMax/2 > mapMin )
-          replaceSingleTileSize = new OpenLayers.Size(Math.round(wmsMaxMax/2), Math.round(wmsMaxMax/2));
-        else
-          replaceSingleTileSize = new OpenLayers.Size(Math.round(wmsMinMax/2), Math.round(wmsMinMax/2));
-    }
+    // TODO : replaceSingleTileSize useful ? Should we use a limit to set the tile size ?
+    // var wmsMaxWidth = 3000;
+    // var wmsMaxHeight = 3000;
+    // if( ('wmsMaxWidth' in config.options) && config.options.wmsMaxWidth )
+    //     wmsMaxWidth = Number(config.options.wmsMaxWidth);
+    // if( ('wmsMaxHeight' in config.options) && config.options.wmsMaxHeight )
+    //     wmsMaxHeight = Number(config.options.wmsMaxHeight);
+    // var removeSingleTile = false;
+    // var mapSize = map.size;
+    // var replaceSingleTileSize = new OpenLayers.Size(wmsMaxWidth, wmsMaxHeight);
+    // if( mapSize.w > wmsMaxWidth || mapSize.h > wmsMaxHeight ){
+    //     removeSingleTile = true;
+    //     var wmsMaxMax = Math.max(wmsMaxWidth, wmsMaxHeight);
+    //     var wmsMinMax = Math.min(wmsMaxWidth, wmsMaxHeight);
+    //     var mapMax = Math.max(mapSize.w, mapSize.h);
+    //     var mapMin = Math.min(mapSize.w, mapSize.h);
+    //     if( mapMax/2 > mapMin )
+    //       replaceSingleTileSize = new OpenLayers.Size(Math.round(mapMax/2), Math.round(mapMax/2));
+    //     else if( wmsMaxMax/2 > mapMin )
+    //       replaceSingleTileSize = new OpenLayers.Size(Math.round(wmsMaxMax/2), Math.round(wmsMaxMax/2));
+    //     else
+    //       replaceSingleTileSize = new OpenLayers.Size(Math.round(wmsMinMax/2), Math.round(wmsMinMax/2));
+    // }
 
     // get the baselayer select content
     // and adding baselayers to the map
@@ -2437,7 +2424,7 @@ var lizMap = function() {
       baselayer.units = projection.proj.units;
       // Update singleTile layers
       if( removeSingleTile && (baselayer instanceof OpenLayers.Layer.WMS) && baselayer.singleTile ) {
-          baselayer.addOptions({singleTile:false, tileSize: replaceSingleTileSize});
+          baselayer.addOptions({singleTile:false/*, tileSize: replaceSingleTileSize*/});
       }
       try{ // because google maps layer can be created but not added
           map.addLayer(baselayer);
@@ -2491,15 +2478,6 @@ var lizMap = function() {
     } else {
       // hide elements for baselayers
       $('#switcher-baselayer').hide();
-      map.addLayer(new OpenLayers.Layer.Vector('baselayer',{
-        maxExtent:map.maxExtent
-       ,maxScale: map.maxScale
-       ,minScale: map.minScale
-       ,numZoomLevels: map.numZoomLevels
-       ,scales: map.scales
-       ,projection: map.projection
-       ,units: map.projection.proj.units
-      }));
     }
 
     // adding layers to the map
@@ -6465,7 +6443,8 @@ OpenLayers.Control.HighlightFeature = OpenLayers.Class(OpenLayers.Control, {
           self.events.triggerEvent("treecreated", self);
 
           // create the map
-          initProjections(firstLayer);
+          // USEFUL ?
+          // initProjections(firstLayer);
           createMap();
           self.map = map;
           self.layers = layers;
