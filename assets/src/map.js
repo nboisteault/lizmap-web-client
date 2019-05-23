@@ -1332,16 +1332,16 @@ var lizMap = function() {
   //   var proj = config.options.projection;
   //   var projection = new OpenLayers.Projection(proj.ref);
 
-  //   // get and define the max extent
-  //   var bbox = config.options.bbox;
-  //   var extent = new OpenLayers.Bounds(Number(bbox[0]),Number(bbox[1]),Number(bbox[2]),Number(bbox[3]));
+    // get and define the max extent
+    // WMS service's max extent
+    var bbox, initialExtent = config.options.bbox;
+    // var extent = new OpenLayers.Bounds(Number(bbox[0]),Number(bbox[1]),Number(bbox[2]),Number(bbox[3]));
 
   //   var restrictedExtent = extent.scale(3);
-  //   var initialExtent = extent.clone();
-  //   if ( 'initialExtent' in config.options && config.options.initialExtent.length == 4 ) {
-  //     var initBbox = config.options.initialExtent;
-  //     initialExtent = new OpenLayers.Bounds(Number(initBbox[0]),Number(initBbox[1]),Number(initBbox[2]),Number(initBbox[3]));
-  //   }
+    // var initialExtent = extent.clone();
+    if ( 'initialExtent' in config.options && config.options.initialExtent.length == 4 ) {
+      initialExtent = config.options.initialExtent;
+    }
 
   //   // calculate the map height
   //   var mapHeight = $('body').parent()[0].clientHeight;
@@ -1505,6 +1505,8 @@ var lizMap = function() {
         zoom: 2
       })
     });
+
+    map.getView().fit(initialExtent);
 
     // add handler to update the map size
     $(window).resize(function() {

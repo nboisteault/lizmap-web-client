@@ -10,8 +10,5 @@ module.exports = {
 		filename: '../../lizmap/www/js/[name].js',
 		chunkFilename: '[name].bundle.js',
 		path: path.resolve(__dirname, 'dist')
-	},
-	externals: {
-		jquery: 'OpenLayers'
 	}
 };
