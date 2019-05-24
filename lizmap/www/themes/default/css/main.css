@@ -84,3 +84,56 @@ a:hover {
 .navbar .nav .home.active a .icon {
   background-position: 0px 0px;
 }
+
+/* ONFI */
+body {
+  background : #FAF9F7;
+}
+#title,
+.search-project,
+.login a span.text,
+.liz-project-show-desc,
+.liz-repository-title,
+.footer .pull-right{
+  display: none!important;
+}
+
+#header{
+  background: none
+}
+
+#headermenu{
+  top: 10px
+}
+
+#auth{border: none;}
+#auth .nav.pull-right{margin-right: 20px!important;}
+
+.navbar .nav .login a .icon, .navbar .nav .login.active a .icon {
+    background-position: -200px 0px;
+}
+
+.navbar .nav li.login{
+  background-color: white;
+  box-shadow: 0 0 3px #ccc;
+  border-radius: 4px;
+  line-height: 55px;
+  width: 60px;
+  text-align: center;
+}
+
+.liz-project-view{
+  background-color: #43AF44;
+  background-image: none;
+  color: white;
+}
+
+.liz-repository-project-item .thumbnail{
+  padding: 0;
+  padding-bottom: 30px;
+}
+
+.liz-project-title{
+  font-weight: bold!important;
+  text-transform: uppercase;
+}

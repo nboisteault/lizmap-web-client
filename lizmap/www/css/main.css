@@ -40,8 +40,8 @@ a:hover {
   font-size:0.8em;
 }
 #logo {
-  float : left;
-  height : 65px;
+  /*float : left;*/
+  height : 55px;
   min-width: 60px;
   margin-top : 5px;
   margin-bottom : 5px;
