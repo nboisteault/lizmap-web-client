@@ -3,10 +3,20 @@
 	background-color: white;
 }
 
+#dock-close, #hide-sub-dock, #bottom-dock-window-buttons .btn, jforms-submit-buttons .btn {
+    background-color: white!important;
+    border: #D9D9D9 1px solid!important;
+    border-radius: 5px!important;
+    text-shadow: none;
+    background-image: none;
+    padding: 4px 12px;
+}
+
 #dock-tabs > .active > a,
 #nav-tab-dataviz-main > a,
 #attributeLayers-tabs > li.active > a,
-#right-dock-tabs > .active > a{
+#right-dock-tabs > .active > a,
+.btn-primary:hover{
 	color: black
 }
 
