@@ -10,9 +10,11 @@
 	color: black
 }
 
-}
-#toolbar .switcher h3 .icon, #menu .switcher h3 .icon, #dock .switcher h3 .icon, #mini-dock .switcher h3 .icon{
+#dock .switcher h3 .icon{
 	background-position: -50px 0px;
+}
+#dock .edition h3 .icon{
+	background-position: -450px 0px;
 }
 
 #mapmenu{
