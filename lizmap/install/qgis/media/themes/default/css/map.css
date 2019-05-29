@@ -1,5 +1,15 @@
 #toolbar h3, #menu h3, #dock h3, #sub-dock h3, #mini-dock h3, #right-dock h3, div.modal h3, .dock-subtitle{
 	color: black;
+	background-color: white;
+}
+
+#dock-tabs > .active > a,
+#nav-tab-dataviz-main > a,
+#attributeLayers-tabs > li.active > a,
+#right-dock-tabs > .active > a{
+	color: black
+}
+
 }
 #toolbar .switcher h3 .icon, #menu .switcher h3 .icon, #dock .switcher h3 .icon, #mini-dock .switcher h3 .icon{
 	background-position: -50px 0px;
@@ -36,6 +46,8 @@ body{padding-top: 0px!important}
 	border: none;
 }
 
+#bottom-dock,
+#right-dock,
 table.attribute-table-table tr td button:hover{
 	background-color: white!important;
 }
