@@ -1198,6 +1198,12 @@ var lizMap = function() {
       html += '<td></td>';
     }
 
+    html += '<td>';
+    if (nodeConfig.type == 'layer'){
+      html += '<span class="settings">&nbsp;</span>';
+    }
+    html += '</td>';
+
     var removeCache = '';
     if (nodeConfig.cached && nodeConfig.cached == 'True' && nodeConfig.type == 'layer' && ('removeCache' in config.options)){
       html += '<td><button class="btn removeCache" name="removeCache" title="'+lizDict['tree.button.removeCache']+'" value="'+aNode.name+'"/></td>';

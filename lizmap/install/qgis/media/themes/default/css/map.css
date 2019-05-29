@@ -1,0 +1,85 @@
+#mapmenu{
+	background: #242424!important;
+	width: 50px
+}
+#logo, #nominatim-search{display:none;}
+body{padding-top: 0px!important}
+
+#navbar{top: 80px}
+#navbar button.btn,#navbar div.slider{background-color: #131313}
+
+#toolbar div.menu-content, #menu div.menu-content, #dock div.menu-content, #sub-dock div.menu-content, #mini-dock div.menu-content, #right-dock div.menu-content, div.modal div.menu-content,
+#dock{
+	background-color: white;
+	left: 50px
+}
+
+#mapmenu .nav-list > li > a{
+	padding: 5px 15px;
+	height: 30px
+}
+
+#mapmenu .nav-list > li.home .icon{
+	background-image:url("img/onfi-black.png");
+	background-position: 0px;
+	background-size: contain;
+}
+
+#dock .tree button.checkbox, #right-dock .tree button.checkbox, #switcher .tree button.checkbox, #dock .tree button.checkbox, #right-dock .tree button.checkbox, #bottom-dock .tree button.checkbox, #mini-dock .tree button.checkbox{
+	border: none;
+}
+
+table.attribute-table-table tr td button:hover{
+	background-color: white!important;
+}
+
+#dock .tree button.checkbox, #right-dock .tree button.checkbox, #switcher .tree button.checkbox, #dock .tree button.checkbox, #right-dock .tree button.checkbox, #bottom-dock .tree button.checkbox, #mini-dock .tree button.checkbox,
+table.attribute-table-table tr td button.attribute-layer-feature-select{
+	background-image:url("img/empty-gray-point.png");
+	background-size: contain;
+	background-position: initial;
+	border: none;
+	padding: 0;
+}
+
+#switcher .tree button.checkbox.checked, #dock .tree button.checkbox.checked, #right-dock .tree button.checkbox.checked, #bottom-dock .tree button.checkbox.checked, #mini-dock .tree button.checkbox.checked, #tmLayers .tree button.checkbox.checked,
+table.attribute-table-table tr.selected td button.attribute-layer-feature-select{
+	background-image:url("img/blue-point.png");
+	background-size: contain;
+	background-position: initial;
+	background-color: white;
+	padding: 0;
+	border: none;
+}
+
+#switcher-layers-container > div.menu-content, #bottom-dock div.bottom-content{background: #FFF}
+
+#switcher .treeTable span.settings{
+	display: none;
+	width: 20px;
+	background-image: url(img/settings.png);
+}
+
+#switcher .treeTable tr:hover span.settings{
+	display: inline-block;
+}
+#navbar button.btn{
+	border: none;
+	margin: 0
+}
+ #navbar div.slider{
+	display: none!important;
+}
+
+/* attribute table */
+table.dataTable.order-column tbody tr > .sorting_1{font-weight: bold;}
+table.dataTable.order-column tbody tr.selected > .sorting_1{color: #4F94FA}
+
+table.attribute-table-table tr td button.attribute-layer-feature-select .icon-ok{background:none;}
+
+table.attribute-table-table tr.selected td, table.attribute-table-table tr.selected.active td,
+table.dataTable tbody tr.selected{background: none!important}
+
+table.attribute-table-table tr.active td:first-child, table.attribute-table-table tr.active:hover td:first-child {
+    border-left: none;
+}
