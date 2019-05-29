@@ -27,6 +27,10 @@
 	background-position: -450px 0px;
 }
 
+#mini-dock .locate h3 .icon{
+	background-position: -150px 0px;
+}
+
 #mapmenu{
 	background: #242424!important;
 	width: 50px
