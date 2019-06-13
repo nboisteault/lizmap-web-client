@@ -172,7 +172,9 @@ class lizMapCtrl extends jController
         $rep->addJSLink($bp.'js/bootstrapErrorDecoratorHtml.js');
 
         // Add bottom dock js
-        $rep->addJSLink($bp.'js/bottom-dock.js');
+        // <TODO LATER
+        // $rep->addJSLink($bp.'js/bottom-dock.js');
+        // TODO LATER>
 
         // Pass some configuration options to the web page through javascript var
         $lizUrls = array(
@@ -222,7 +224,9 @@ class lizMapCtrl extends jController
         $rep->title = $title;
 
         // Add search js
-        $rep->addJSLink($bp.'js/search.js');
+        // <TODO LATER
+        // $rep->addJSLink($bp.'js/search.js');
+        // TODO LATER>
 
         // Add moment.js for timemanager
         if ($lproj->hasTimemanagerLayers()) {
@@ -245,7 +249,9 @@ class lizMapCtrl extends jController
         }
 
         // Add qgis popup atlas JS
-        $rep->addJSLink($bp.'js/popupQgisAtlas.js');
+        // <TODO LATER
+        // $rep->addJSLink($bp.'js/popupQgisAtlas.js');
+        // TODO LATER>
 
         // Assign variables to template
         $assign = array_merge(array(
@@ -514,7 +520,9 @@ class lizMapCtrl extends jController
         //$assign['auth_url_return'] = jUrl::get('view~default:index');
 
         // switcher-layers-actions javascript
-        $rep->addJSLink($bp.'js/switcher-layers-actions.js');
+        // <TODO LATER
+        // $rep->addJSLink($bp.'js/switcher-layers-actions.js');
+        // TODO LATER>
 
         // Add Google Analytics ID
         $assign['googleAnalyticsID'] = '';
