@@ -37,6 +37,7 @@ body {
   margin-top:1px;
   height:30px;
   width:260px;
+  display: none;
 }
 
 #headermenu .navbar-search .search-query {
