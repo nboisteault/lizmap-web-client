@@ -6417,7 +6417,7 @@ OpenLayers.Control.HighlightFeature = OpenLayers.Class(OpenLayers.Control, {
           // initProjections(firstLayer);
           // TODO LATER>
           // createMap();
-          self.map = new MainMap();
+          self.map = new MainMap(config.options);
           // <TODO LATER
           // self.layers = layers;
           // self.baselayers = baselayers;

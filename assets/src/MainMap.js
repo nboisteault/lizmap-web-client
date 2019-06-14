@@ -7,7 +7,7 @@ import OSM from 'ol/source/OSM';
 
 class MainMap {
 
-	constructor() {
+	constructor(options) {
 	    this.map = new Map({
 	      layers: [
 	        new TileLayer({
@@ -20,9 +20,13 @@ class MainMap {
 	      view: new View({
 	        center: [0, 0],
 	        zoom: 2
-	        // initialExtent: initialExtent
 	      })
 	    });
+
+	    if(options.hasOwnProperty('initialExtent')){
+	    	// TODO : handle other projection
+	    	this.map.getView().fit(options.initialExtent);
+	    }
 	  }
 }
 
