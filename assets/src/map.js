@@ -10,6 +10,9 @@
 
 import Util from './util.js';
 
+import WMSCapabilities from 'ol/format/WMSCapabilities';
+import WMTSCapabilities from 'ol/format/WMTSCapabilities';
+
 
 var lizMap = function() {
   /**
@@ -190,7 +193,7 @@ var lizMap = function() {
     if ( aName in cleanNameMap )
         return aName;
 
-    theCleanName = performCleanName( aName );
+    var theCleanName = performCleanName( aName );
     if ( (theCleanName in cleanNameMap) && cleanNameMap[theCleanName] != aName ){
         i = 1;
         nCleanName = theCleanName+i;
@@ -5331,21 +5334,16 @@ OpenLayers.Control.HighlightFeature = OpenLayers.Class(OpenLayers.Control, {
    * Returns:
    * {Boolean} the capability is OK
    */
-  function parseData(aData) {
-    var format =  new OpenLayers.Format.WMSCapabilities({version:'1.3.0'});
-    var html = "";
-    capabilities = format.read(aData);
+   function parseData(aData) {
+     var parser = new WMSCapabilities();
+     capabilities = parser.read(aData);
 
-    var format = new OpenLayers.Format.XML();
-    composers = format.read(aData).getElementsByTagName('ComposerTemplate');
-
-    var capability = capabilities.capability;
-    if (!capability) {
-      $('#map').html('SERVICE NON DISPONIBLE!');
-      return false;
-    }
-    return true;
-  }
+     if (!capabilities) {
+       $('#map').html('SERVICE NON DISPONIBLE!');
+       return false;
+     }
+     return true;
+   }
 
   /**
    * PRIVATE function: loadProjDefinition
@@ -6345,6 +6343,7 @@ OpenLayers.Control.HighlightFeature = OpenLayers.Class(OpenLayers.Control, {
         var service = Util.urlAppend(lizUrls.wms
           ,Util.getParameterString(lizUrls.params)
         );
+        // TODO : remplacer par des promises
         $.get(service
           ,{SERVICE:'WMS',REQUEST:'GetCapabilities',VERSION:'1.3.0'}
           ,function(data) {
@@ -6356,17 +6355,18 @@ OpenLayers.Control.HighlightFeature = OpenLayers.Class(OpenLayers.Control, {
           ,function(wfsCapaData) {
 
             //parse capabilities
-            if (!parseData(data))
-                return true;
+            if (!parseData(data)){
+              return true;
+            }
 
-            var wmtsFormat = new OpenLayers.Format.WMTSCapabilities({});
-            wmtsCapabilities = wmtsFormat.read( wmtsCapaData );
-            if ( 'exceptionReport' in wmtsCapabilities ) {
+            var wmtsParser = new WMTSCapabilities();
+            wmtsCapabilities = wmtsParser.read( wmtsCapaData );
+            if ( !wmtsCapabilities ) {
                 wmtsElem = $('#metadata-wmts-getcapabilities-url');
                 if ( wmtsElem.length != 0 ) {
+                  // TODO : handle exception with OL5
                     wmtsElem.before('<i title="'+wmtsCapabilities.exceptionReport.exceptions[0].texts[0]+'" class="icon-warning-sign"></i>&nbsp;');
                 }
-                wmtsCapabilities = null;
             }
 
             wfsCapabilities = $(wfsCapaData);
@@ -6398,10 +6398,10 @@ OpenLayers.Control.HighlightFeature = OpenLayers.Class(OpenLayers.Control, {
             } );
 
           //set title and abstract coming from capabilities
-          $('#abstract').html(capabilities.abstract ? capabilities.abstract : '');
+          $('#abstract').html(capabilities.Service.Abstract ? capabilities.Service.Abstract : '');
 
           // get and analyse tree
-          var capability = capabilities.capability;
+          var capability = capabilities.Capability;
           beforeLayerTreeCreated();
           var firstLayer = capability.nestedLayers[0];
           getLayerTree(firstLayer,tree);
