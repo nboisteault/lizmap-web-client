@@ -8,6 +8,8 @@
 * @license    Mozilla Public License : http://www.mozilla.org/MPL/
 */
 
+import Util from './util.js';
+
 
 var lizMap = function() {
   /**
@@ -6340,8 +6342,8 @@ OpenLayers.Control.HighlightFeature = OpenLayers.Class(OpenLayers.Control, {
         }
 
          //get capabilities
-        var service = OpenLayers.Util.urlAppend(lizUrls.wms
-          ,OpenLayers.Util.getParameterString(lizUrls.params)
+        var service = Util.urlAppend(lizUrls.wms
+          ,Util.getParameterString(lizUrls.params)
         );
         $.get(service
           ,{SERVICE:'WMS',REQUEST:'GetCapabilities',VERSION:'1.3.0'}
