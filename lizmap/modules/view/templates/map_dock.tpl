@@ -1,3 +1,4 @@
+    <button id="dock-close" class="btn btn-sm">{@view~map.bottomdock.toolbar.btn.clear.title@}</button>
     <div class="tabbable">
       <ul id="dock-tabs" class="nav nav-tabs">
       {foreach $dockable as $dock}
@@ -12,5 +13,3 @@
       {/foreach}
       </div>
     </div>
-
-<button id="dock-close"> {@view~map.bottomdock.toolbar.btn.clear.title@}</button>

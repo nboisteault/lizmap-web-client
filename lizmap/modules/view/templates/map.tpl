@@ -16,20 +16,17 @@
   </div>
 </div>
 
-<div id="mapmenu" style="">
-  {zone 'view~map_menu', array('repository'=>$repository,'project'=>$project,'dockable'=>$dockable,'minidockable'=>$minidockable, 'bottomdockable'=>$bottomdockable, 'rightdockable'=>$rightdockable)}
-</div>
-
 <div id="map" class="map"></div>
 
+<div id="mapmenu">
+  {zone 'view~map_menu', array('repository'=>$repository,'project'=>$project,'dockable'=>$dockable,'minidockable'=>$minidockable, 'bottomdockable'=>$bottomdockable, 'rightdockable'=>$rightdockable)}
+</div>
+<div id="dock">
+    {zone 'view~map_dock', array('repository'=>$repository,'project'=>$project,'dockable'=>$dockable)}
+</div>
 
-<div id="content">
 
-
-
-  <div id="dock">
-      {zone 'view~map_dock', array('repository'=>$repository,'project'=>$project,'dockable'=>$dockable)}
-  </div>
+<!-- <div id="content">
 
   <div id="sub-dock">
   </div>
@@ -104,7 +101,7 @@
     </div>
 
   </div>
-</div>
+</div> -->
 
 <div id="loading" class="ui-dialog-content ui-widget-content" title="{@view~map.loading.title@}">
   <p>

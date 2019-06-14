@@ -2,6 +2,7 @@ import 'ol/ol.css';
 
 import Map from 'ol/Map.js';
 import View from 'ol/View.js';
+import {defaults as defaultControls, Control, ScaleLine} from 'ol/control.js';
 import {Tile as TileLayer} from 'ol/layer.js';
 import OSM from 'ol/source/OSM';
 
@@ -11,8 +12,7 @@ class MainMap {
 	    this.map = new Map({
 	      layers: [
 	        new TileLayer({
-	          source: new OSM(),
-	          baseLayer: true
+	          source: new OSM()
 	        })
 	      ],
 	      controls: [],

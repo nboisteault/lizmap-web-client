@@ -6630,42 +6630,46 @@ OpenLayers.Control.HighlightFeature = OpenLayers.Class(OpenLayers.Control, {
           //     $('#mini-dock-tabs li.active').removeClass('active');
           // }
 
-          // $('#mapmenu ul').on('click', 'li.nav-dock > a', function(){
-          //   var self = $(this);
-          //   var parent = self.parent();
-          //   var id = self.attr('href').substr(1);
-          //   var tab = $('#nav-tab-'+id);
-          //   var lizmapEvent = '';
-          //   if ( parent.hasClass('active') ) {
-          //       $('#'+id).removeClass('active');
-          //       tab.removeClass('active');
-          //       parent.removeClass('active');
-          //       lizmapEvent = 'dockclosed';
-          //   } else {
-          //       var oldActive = $('#mapmenu li.nav-dock.active');
-          //       if ( oldActive.length != 0 ) {
-          //           oldActive.removeClass('active');
-          //           lizMap.events.triggerEvent( "dockclosed", {'id': oldActive.children('a').first().attr('href').substr(1) } );
-          //       }
-          //       tab.show();
-          //       tab.children('a').first().click();
-          //       parent.addClass('active');
-          //       lizmapEvent = 'dockopened';
-          //   }
-          //   self.blur();
+          $('#mapmenu ul').on('click', 'li.nav-dock > a', function(){
+            var self = $(this);
+            var parent = self.parent();
+            var id = self.attr('href').substr(1);
+            var tab = $('#nav-tab-'+id);
+            var lizmapEvent = '';
+            if ( parent.hasClass('active') ) {
+                $('#'+id).removeClass('active');
+                tab.removeClass('active');
+                parent.removeClass('active');
+                lizmapEvent = 'dockclosed';
+            } else {
+                var oldActive = $('#mapmenu li.nav-dock.active');
+                if ( oldActive.length != 0 ) {
+                    oldActive.removeClass('active');
+                    // <TODO LATER
+                    // lizMap.events.triggerEvent( "dockclosed", {'id': oldActive.children('a').first().attr('href').substr(1) } );
+                    // TODO LATER>
+                }
+                tab.show();
+                tab.children('a').first().click();
+                parent.addClass('active');
+                lizmapEvent = 'dockopened';
+            }
+            self.blur();
 
-          //   var dock = $('#dock');
-          //   if ( $('#dock-tabs .active').length == 0 )
-          //     dock.hide();
-          //   else if ( !dock.is(':visible') )
-          //     dock.show();
+            var dock = $('#dock');
+            if ( $('#dock-tabs .active').length == 0 )
+              dock.hide();
+            else if ( !dock.is(':visible') )
+              dock.show();
 
-          //   // trigger event
-          //   if ( lizmapEvent != '' )
-          //       lizMap.events.triggerEvent( lizmapEvent, {'id':id} );
+            // trigger event
+            // <TODO LATER
+            // if ( lizmapEvent != '' )
+            //     lizMap.events.triggerEvent( lizmapEvent, {'id':id} );
+            // TODO LATER>
 
-          //   return false;
-          // });
+            return false;
+          });
 
           // $('#mapmenu ul').on('click', 'li.nav-right-dock > a', function(){
           //   var self = $(this);
