@@ -3,7 +3,7 @@ const path = require('path');
 module.exports = {
 	mode: 'production',
 	entry: {
-		map: './src/map.js'
+		map: './src/index.js'
 	},
 	output: {
 		filename: '../../lizmap/www/js/[name].js',

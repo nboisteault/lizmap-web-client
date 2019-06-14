@@ -4,7 +4,7 @@ module.exports = {
 	mode: 'development',
 	devtool: 'inline-source-map',
 	entry: {
-		map: './src/map.js'
+		map: './src/index.js'
 	},
 	output: {
 		filename: '../../lizmap/www/js/[name].js',
