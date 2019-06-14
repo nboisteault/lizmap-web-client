@@ -166,9 +166,9 @@ class lizMapCtrl extends jController
         }
 	
         // Add other jForms js
-        $rep->addJSLink($bp.'js/ckeditor5/ckeditor.js');
-        $rep->addJSLink($bp.'js/ckeditor5/ckeditor_lizmap.js');
-        $rep->addJSLink($bp.'js/fileUpload/jquery.fileupload.js');
+        // $rep->addJSLink($bp.'js/ckeditor5/ckeditor.js');
+        // $rep->addJSLink($bp.'js/ckeditor5/ckeditor_lizmap.js');
+        // $rep->addJSLink($bp.'js/fileUpload/jquery.fileupload.js');
         $rep->addJSLink($bp.'js/bootstrapErrorDecoratorHtml.js');
 
         // Add bottom dock js

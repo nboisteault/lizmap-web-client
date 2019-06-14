@@ -2465,3 +2465,21 @@ input[type="file"].jforms-ctrl-upload {
 img {
  image-orientation: from-image;
 }
+
+
+/*
+Ajout migration OL5
+*/
+#map, #mapmenu {
+    padding-top: 75px;
+    /*TODO A supprimer après insertion de bootstrap 4 */
+    box-sizing: border-box;
+}
+
+#mapmenu {
+    position: absolute;
+    left: 0px;
+    height: 100%;
+    width: 30px;
+    z-index: 1;
+}

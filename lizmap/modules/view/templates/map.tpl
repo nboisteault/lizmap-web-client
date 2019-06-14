@@ -16,11 +16,16 @@
   </div>
 </div>
 
+<div id="mapmenu" style="">
+  {zone 'view~map_menu', array('repository'=>$repository,'project'=>$project,'dockable'=>$dockable,'minidockable'=>$minidockable, 'bottomdockable'=>$bottomdockable, 'rightdockable'=>$rightdockable)}
+</div>
+
+<div id="map" class="map"></div>
+
+
 <div id="content">
 
-  <div id="mapmenu" style="">
-    {zone 'view~map_menu', array('repository'=>$repository,'project'=>$project,'dockable'=>$dockable,'minidockable'=>$minidockable, 'bottomdockable'=>$bottomdockable, 'rightdockable'=>$rightdockable)}
-  </div>
+
 
   <div id="dock">
       {zone 'view~map_dock', array('repository'=>$repository,'project'=>$project,'dockable'=>$dockable)}
@@ -38,7 +43,6 @@
   </div>
 
   <div id="map-content">
-    <div id="map"></div>
 
     <div id="mini-dock">
       {zone 'view~map_minidock', array('repository'=>$repository,'project'=>$project,'dockable'=>$minidockable)}
