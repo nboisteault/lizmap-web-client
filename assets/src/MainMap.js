@@ -1,3 +1,5 @@
+import 'ol/ol.css';
+
 import Map from 'ol/Map.js';
 import View from 'ol/View.js';
 import {Tile as TileLayer} from 'ol/layer.js';
