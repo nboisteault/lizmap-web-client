@@ -2474,6 +2474,10 @@ Ajout migration OL5
     box-sizing: border-box;
 }
 
+#dock {
+  display: none;
+}
+
 #mapmenu {
     position: absolute;
     left: 0px;

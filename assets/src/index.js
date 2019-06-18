@@ -15,7 +15,6 @@ import Dock from './Dock.js';
 import WMSCapabilities from 'ol/format/WMSCapabilities';
 import WMTSCapabilities from 'ol/format/WMTSCapabilities';
 
-
 /*! ES6 String.prototype.startsWith polyfill */
 /*! https://mths.be/startswith v0.2.0 by @mathias */
 require('string.prototype.startswith');
@@ -6650,6 +6649,11 @@ OpenLayers.Control.HighlightFeature = OpenLayers.Class(OpenLayers.Control, {
           // $('#mapmenu .nav a[rel="tooltip"]').tooltip();
           // self.events.triggerEvent("uicreated", self);
           // TODO LATER>
+
+          // Connect dock close button
+          $('#dock-close').click(function(){ $('#mapmenu .nav-list > li.active.nav-dock > a').click(); });
+          $('#right-dock-close').click(function(){ $('#mapmenu .nav-list > li.active.nav-right-dock > a').click(); });
+
           $('body').css('cursor', 'auto');
           $('#loading').dialog('close');
         }, "text");
@@ -7333,9 +7337,6 @@ OpenLayers.Control.HighlightFeature = OpenLayers.Class(OpenLayers.Control, {
 //             }
 //         }
 
-//       // Connect dock close button
-//       $('#dock-close').click(function(){ $('#mapmenu .nav-list > li.active.nav-dock > a').click(); });
-//       $('#right-dock-close').click(function(){ $('#mapmenu .nav-list > li.active.nav-right-dock > a').click(); });
 //    }
 
 // });

@@ -56,25 +56,31 @@ class Dock {
             }
           });
       }
-      else if( dtype == 'right-dock' )
+      else if( dtype == 'right-dock' ){
           $('#right-dock-content').append(docktab);
-      else if( dtype == 'dock' )
+      }
+      else if( dtype == 'dock' ){
           $('#dock-content').append(docktab);
-      else if( dtype == 'bottomdock' )
+      }
+      else if( dtype == 'bottomdock' ){
           $('#bottom-dock-content').append(docktab);
+      }
 
       // Create dock tab li
       var docktabli = '';
       docktabli+= '<li id="nav-tab-'+dname+'"><a href="#'+dname+'" data-toggle="tab">'+dlabel+'</a></li>';
-      if( dtype == 'minidock')
+      if( dtype == 'minidock'){
           $('#mini-dock-tabs').append(docktabli);
-      else if( dtype == 'right-dock' )
+      }
+      else if( dtype == 'right-dock' ){
           $('#right-dock-tabs').append(docktabli);
-      else if( dtype == 'dock' )
+      }
+      else if( dtype == 'dock' ){
           $('#dock-tabs').append(docktabli);
-      else if( dtype == 'bottomdock' )
+      }
+      else if( dtype == 'bottomdock' ){
           $('#bottom-dock-tabs').append(docktabli);
-
+      }
   }
 }
 
