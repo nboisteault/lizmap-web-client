@@ -1,6 +1,6 @@
 import Map from 'ol/Map.js';
 import View from 'ol/View.js';
-import {defaults as defaultControls, ZoomSlider} from 'ol/control.js';
+import {defaults as defaultControls, ZoomSlider, MousePosition} from 'ol/control.js';
 import {Tile as TileLayer} from 'ol/layer.js';
 import OSM from 'ol/source/OSM';
 
@@ -19,7 +19,8 @@ class MainMap {
               zoomOutTipLabel: lizDict['zoom.zoomout']
             }
           }).extend([
-		      new ZoomSlider()
+		      new ZoomSlider(),
+		      new MousePosition() // TODO : create combobox to display coordinate with the hemisphere, degrees, minutes, and seconds. https://openlayers.org/en/latest/apidoc/module-ol_coordinate.html#.toStringHDMS
 		    ]),
 	      target: 'map',
 	      view: new View({
