@@ -2496,14 +2496,49 @@ Ajout migration OL5
 .ol-control button:focus, .ol-control button:hover{
   background-color: rgb(206, 31, 45);
 }
-.ol-zoom{
+
+.ol-zoom, .ol-zoomslider{
   left: unset;
   right: .5em;
 }
 
+.ol-zoom .ol-zoom-in,.ol-zoom .ol-zoom-out, button.ol-zoomslider-thumb{
+  border-radius: 0;
+  font-size: 1.5em;
+  width: 30px;
+}
+
 .ol-zoom .ol-zoom-in,.ol-zoom .ol-zoom-out{
   background: rgb(206, 31, 45);
-  font-size: 1.6em;
   font-weight: initial;
-  border-radius: 0;
+  height: 30px;
+}
+
+.ol-zoom .ol-zoom-out{
+  margin-top: 85px;
+}
+
+.ol-zoom .ol-zoom-in,.ol-zoom .ol-zoom-out, .ol-zoomslider{
+  border: white solid 1px;
+}
+
+button.ol-zoomslider-thumb, button.ol-zoomslider-thumb:hover, button.ol-zoomslider-thumb:focus{
+  background-color: black;
+}
+
+button.ol-zoomslider-thumb{
+    height: 4px;
+    right: 15px;
+    border-radius: 20px;
+}
+
+.ol-zoomslider{
+  width: 1px;
+  height: 70px;
+  right: 1.4em;
+  top: 3em;
+}
+
+.ol-zoomslider:hover, .ol-zoomslider{
+  background: rgb(206, 31, 45);
 }

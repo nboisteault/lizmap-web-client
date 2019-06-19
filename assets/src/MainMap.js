@@ -1,6 +1,6 @@
 import Map from 'ol/Map.js';
 import View from 'ol/View.js';
-import {defaults as defaultControls, Control, ScaleLine} from 'ol/control.js';
+import {defaults as defaultControls, ZoomSlider} from 'ol/control.js';
 import {Tile as TileLayer} from 'ol/layer.js';
 import OSM from 'ol/source/OSM';
 
@@ -18,7 +18,9 @@ class MainMap {
               zoomInTipLabel: lizDict['zoom.zoomin'],
               zoomOutTipLabel: lizDict['zoom.zoomout']
             }
-          }),
+          }).extend([
+		      new ZoomSlider()
+		    ]),
 	      target: 'map',
 	      view: new View({
 	        center: [0, 0],
