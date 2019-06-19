@@ -2485,3 +2485,25 @@ Ajout migration OL5
     width: 30px;
     z-index: 1;
 }
+
+/* Controls OL */
+.ol-control, .ol-control:hover{
+  background-color: initial;
+}
+.ol-control button{
+  border-radius: 0;
+}
+.ol-control button:focus, .ol-control button:hover{
+  background-color: rgb(206, 31, 45);
+}
+.ol-zoom{
+  left: unset;
+  right: .5em;
+}
+
+.ol-zoom .ol-zoom-in,.ol-zoom .ol-zoom-out{
+  background: rgb(206, 31, 45);
+  font-size: 1.6em;
+  font-weight: initial;
+  border-radius: 0;
+}

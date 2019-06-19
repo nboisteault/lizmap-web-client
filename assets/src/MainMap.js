@@ -1,5 +1,3 @@
-import 'ol/ol.css';
-
 import Map from 'ol/Map.js';
 import View from 'ol/View.js';
 import {defaults as defaultControls, Control, ScaleLine} from 'ol/control.js';
@@ -15,7 +13,12 @@ class MainMap {
 	          source: new OSM()
 	        })
 	      ],
-	      controls: [],
+	      controls: defaultControls({
+            zoomOptions: {
+              zoomInTipLabel: lizDict['zoom.zoomin'],
+              zoomOutTipLabel: lizDict['zoom.zoomout']
+            }
+          }),
 	      target: 'map',
 	      view: new View({
 	        center: [0, 0],
