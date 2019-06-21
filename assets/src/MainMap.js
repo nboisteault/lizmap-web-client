@@ -1,39 +1,33 @@
 import Map from 'ol/Map.js';
 import View from 'ol/View.js';
-import {defaults as defaultControls, ZoomSlider, MousePosition} from 'ol/control.js';
-import {Tile as TileLayer} from 'ol/layer.js';
-import OSM from 'ol/source/OSM';
+import { defaults as defaultControls, ZoomSlider, MousePosition } from 'ol/control.js';
+import { Tile as TileLayer } from 'ol/layer.js';
 
 class MainMap {
 
-	constructor(options) {
-	    this.map = new Map({
-	      layers: [
-	        new TileLayer({
-	          source: new OSM()
-	        })
-	      ],
-	      controls: defaultControls({
-            zoomOptions: {
-              zoomInTipLabel: lizDict['zoom.zoomin'],
-              zoomOutTipLabel: lizDict['zoom.zoomout']
-            }
-          }).extend([
-		      new ZoomSlider(),
-		      new MousePosition() // TODO : create combobox to display coordinate with the hemisphere, degrees, minutes, and seconds. https://openlayers.org/en/latest/apidoc/module-ol_coordinate.html#.toStringHDMS
-		    ]),
-	      target: 'map',
-	      view: new View({
-	        center: [0, 0],
-	        zoom: 2
-	      })
-	    });
+    constructor(options) {
+        this.OLmap = new Map({
+            controls: defaultControls({
+                zoomOptions: {
+                    zoomInTipLabel: lizDict['zoom.zoomin'],
+                    zoomOutTipLabel: lizDict['zoom.zoomout']
+                }
+            }).extend([
+                new ZoomSlider(),
+                new MousePosition() // TODO : create combobox to display coordinate with the hemisphere, degrees, minutes, and seconds. https://openlayers.org/en/latest/apidoc/module-ol_coordinate.html#.toStringHDMS
+            ]),
+            target: 'map',
+            view: new View({
+                center: [0, 0],
+                zoom: 2
+            })
+        });
 
-	    if(options.hasOwnProperty('initialExtent')){
-	    	// TODO : handle other projection
-	    	this.map.getView().fit(options.initialExtent);
-	    }
-	  }
+        if (options.hasOwnProperty('initialExtent')) {
+            // TODO : handle other projection
+            this.OLmap.getView().fit(options.initialExtent);
+        }
+    }
 }
 
 export default MainMap;
