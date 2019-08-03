@@ -1,5 +1,7 @@
 <ol-map></ol-map>
-<leaflet-map></leaflet-map>
+
+<leaflet-map><div id="leafletmap"></div></leaflet-map>
+
 
 {if false}
 <div id="header">
