@@ -1,3 +1,6 @@
+<ol-map></ol-map>
+<leaflet-map></leaflet-map>
+
 {if false}
 <div id="header">
   <div id="logo">
