@@ -1,5 +1,8 @@
 name: End-to-end tests with Cypress
-on: [push]
+on:
+  push:
+    branches:
+      - cypress-ci
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
