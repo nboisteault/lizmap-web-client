@@ -9,6 +9,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v1
+      - name: Run tests docker
+        run: cd tests && ./lizmap-ctl clean && ./run-docker build && ./run-docker
       # Install NPM dependencies, cache them correctly
       # and run all Cypress tests
       - name: Cypress run
