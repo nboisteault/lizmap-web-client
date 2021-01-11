@@ -3,29 +3,36 @@ on:
   push:
     branches:
       - cypress-ci
+      - master
+      - release_3_4
+      - refactor
+  pull_request:
+    branches:
+      - master
+      - release_3_4
+      - refactor
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v1
-
-      - run: cd tests && ./lizmap-ctl clean && ./run-docker pull
-
-      # In this step, this action saves a list of existing images,
-      # the cache is created without them in the post run.
-      # It also restores the cache if it exists.
-      - uses: satackey/action-docker-layer-caching@v0.0.11
-        # Ignore the failure of a step and avoid terminating the job.
-        continue-on-error: true
-
+        uses: actions/checkout@v2
       - name: Run tests docker
         run: cd tests && ./lizmap-ctl clean && ./run-docker build && ./run-docker
       # Install NPM dependencies, cache them correctly
       # and run all Cypress tests
+      - name: Cypress install
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cache/Cypress
+            node_modules
+          key: my-cache-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+      - run: npm i cypress
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
+          install: false
           browser: chrome
           headless: true
           working-directory: tests/js
