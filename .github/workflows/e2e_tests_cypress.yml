@@ -35,5 +35,4 @@ jobs:
           install: false
           browser: chrome
           headless: true
-          video: false
           working-directory: tests/js
