@@ -5,6 +5,7 @@ on:
       - master
       - release_3_4
       - refactor
+      - cypress-ci-cache
   pull_request:
     branches:
       - master
@@ -19,7 +20,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Run tests docker
-        run: cd tests && ./lizmap-ctl clean && ./run-docker build && ./run-docker
+        run: cd tests && ./lizmap-ctl clean && ./run-docker build && ./run-docker up -d
 
       # Install NPM dependencies, cache them correctly
       # and run all Cypress tests
@@ -29,3 +30,4 @@ jobs:
           browser: chrome
           headless: true
           working-directory: tests/js
+          wait-on: http://localhost:8130
