@@ -38,3 +38,4 @@ jobs:
           browser: chrome
           headless: true
           working-directory: tests/js
+          wait-on: http://localhost:8130
