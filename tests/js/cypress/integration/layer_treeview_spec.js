@@ -30,27 +30,27 @@ describe('Form edition', function() {
         cy.get('#layer-layer_treeview > td:nth-child(1) > button:nth-child(2)').should('not.have.class', 'checked')
     })
 
-    it('click on another mutually exclusive layout', function(){
+    it('click on another mutually exclusive layer', function(){
         cy.get('#layer-layer_mut_2 > td:nth-child(1) > button:nth-child(2)').click()
         cy.get('#layer-layer_mut_2 > td:nth-child(1) > button:nth-child(2)').should('have.class','checked')
         cy.get('#layer-layer_mut_1 > td:nth-child(1) > button:nth-child(2)').should('not.have.class','checked')
     })
 
-    it('click on subgroup after mutually exclusive layout', function(){
+    it('click on subgroup after mutually exclusive layer', function(){
         cy.get('#group-sub_group_mut > td:nth-child(1) > button:nth-child(2)').click()
         cy.get('#group-sub_group_mut > td:nth-child(1) > button:nth-child(2)').should('have.class','checked')
         cy.get('#layer-layer_mut_1 > td:nth-child(1) > button:nth-child(2)').should('not.have.class','checked')
     })
 
-    it.only('unchecked layer', function(){
+    it('unchecked layer', function(){
         cy.get('#layer-layer_treeview > td:nth-child(1) > button:nth-child(2)').click()
         cy.get('#layer-layer_treeview > td:nth-child(1) > button:nth-child(2)').should('not.have.class', 'checked')
         cy.get('#OpenLayers_Layer_WMS_2').should('not.be.visible')
     })
 
-    it('map snapshot', () => {
+    it.only('map snapshot', () => {
         cy.wait(1000)
         // match element snapshot
-        cy.get('#map').matchImageSnapshot('map')
-      })
+        cy.get('#map').matchImageSnapshot('test_elem', {clip: { x: 238, y: 0, width: 2500, height: 800 }, blackout: ['#overview-box', '#navbar', '#attribution-box']})
+    })
 })
