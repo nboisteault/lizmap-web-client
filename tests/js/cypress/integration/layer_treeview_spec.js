@@ -42,15 +42,15 @@ describe('Form edition', function() {
         cy.get('#layer-layer_mut_1 > td:nth-child(1) > button:nth-child(2)').should('not.have.class','checked')
     })
 
-    it.only('unchecked layer', function(){
+    it('unchecked layer', function(){
         cy.get('#layer-layer_treeview > td:nth-child(1) > button:nth-child(2)').click()
         cy.get('#layer-layer_treeview > td:nth-child(1) > button:nth-child(2)').should('not.have.class', 'checked')
         cy.get('#OpenLayers_Layer_WMS_2').should('not.be.visible')
     })
 
-    it('map snapshot', () => {
+    it.only('map snapshot', () => {
         cy.wait(1000)
         // match element snapshot
-        cy.get('#map').matchImageSnapshot('map')
+        cy.get('#map').matchImageSnapshot('map', {blackout: ['#switcher','.editable-position > input:nth-child(1)', '.editable-position > input:nth-child(2)']})
       })
 })
