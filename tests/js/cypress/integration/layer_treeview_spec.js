@@ -51,6 +51,11 @@ describe('Form edition', function() {
     it.only('map snapshot', () => {
         cy.wait(1000)
         // match element snapshot
+<<<<<<< HEAD
         cy.get('#map').matchImageSnapshot('test_elem', {clip: { x: 238, y: 0, width: 2500, height: 800 }, blackout: ['#overview-box', '#navbar', '#attribution-box']})
     })
+=======
+        cy.get('#map').matchImageSnapshot('map', {blackout: ['#switcher','.editable-position > input:nth-child(1)', '.editable-position > input:nth-child(2)']})
+      })
+>>>>>>> dd7750024bbbf39d4d08f4b81871df7edc3d90cc
 })
