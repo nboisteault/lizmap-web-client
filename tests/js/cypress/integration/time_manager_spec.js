@@ -1,0 +1,45 @@
+describe('Form edition', function() {
+    beforeEach(function(){
+        cy.visit('/index.php/view/map/?repository=testsrepository&project=time_manager')
+    })
+
+    it('', function(){
+        cy.get('#button-timemanager').click()
+        cy.get('#mini-dock').should('be.visible')
+        cy.get('').should('be.visible')//2007
+        cy.get('').should('not.be.visible')//2012
+        cy.get('').should('not.be.visible')//2017
+        cy.get('#tmNext').click()
+        cy.get('').should('not.be.visible')//2007
+        cy.get('').should('be.visible')//2012
+        cy.get('').should('not.be.visible')//2017
+        cy.get('#tmNext').click()
+        cy.get('').should('not.be.visible')//2007
+        cy.get('').should('not.be.visible')//2012
+        cy.get('').should('be.visible')//2017
+        cy.get('#tmPrev').click()
+        cy.get('').should('not.be.visible')//2007
+        cy.get('').should('be.visible')//2012
+        cy.get('').should('not.be.visible')//2017
+        cy.get('#tmPrev').click()
+        cy.get('').should('be.visible')//2007
+        cy.get('').should('not.be.visible')//2012
+        cy.get('').should('not.be.visible')//2017
+        cy.get('#tmTogglePlay').click()
+        cy.get('').should('be.visible')//2007
+        cy.get('').should('not.be.visible')//2012
+        cy.get('').should('not.be.visible')//2017
+        cy.wait(1000)
+        cy.get('').should('not.be.visible')//2007
+        cy.get('').should('be.visible')//2012
+        cy.get('').should('not.be.visible')//2017
+        cy.wait(1000)
+        cy.get('').should('not.be.visible')//2007
+        cy.get('').should('not.be.visible')//2012
+        cy.get('').should('be.visible')//2017
+        cy.wait(1000)
+        cy.get('').should('be.visible')//2007
+        cy.get('').should('not.be.visible')//2012
+        cy.get('').should('not.be.visible')//2017
+    })
+})
