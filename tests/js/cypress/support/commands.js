@@ -28,3 +28,6 @@
 import { addMatchImageSnapshotCommand } from 'cypress-image-snapshot/command';
 
 addMatchImageSnapshotCommand();
+
+//Adds for cypress-file-upload
+import 'cypress-file-upload';
