@@ -40,7 +40,7 @@ describe('Form edition', function() {
         cy.get('#map').matchImageSnapshot('time_manager_previous_slider_begin_2007-01-01_visible')
     })
 
-    it.only('Time manager tool, play button', function(){
+    it('Time manager tool, play button', function(){
         //Activate Time Manager tool in the left menu (clock icon)
         cy.get('#button-timemanager').click()
         cy.wait(1000)
