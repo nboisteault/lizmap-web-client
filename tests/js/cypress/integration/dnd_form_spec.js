@@ -3,11 +3,13 @@ describe('Form edition', function() {
         cy.visit('/index.php/view/map/?repository=testsrepository&project=dnd_form')
     })
 
-    it('update features', function(){
+    it.only('update features', function(){
         //Click on the only one `dnd_form_geom` feature to open the popup
-        cy.get('').click()
+        cy.get('#map').trigger('mousedown', {which: 1, pageX: 600, pageY:700}).trigger('mousemove', {pageX: 0, pageY:-600}).trigger('mouseup', {force: true})
+        cy.get('#map').click(600, 200)
+        cy.get('#map').click(735, 683)
         //Check that `Field in` field should not be empty
-        cy.get('#popupcontent > div > div > div.lizmapPopupSingleFeature > div > table > tbody > tr:nth-child(2)').should('not.have.class','empty-data')
+        cy.get('#popupcontent > div > div > div.lizmapPopupSingleFeature > div > table > tbody > tr:nth-child(2) > td').should('not.have.class','empty-data')
         //Check that `Field not in` field should not be empty
         cy.get('#popupcontent > div > div > div.lizmapPopupSingleFeature > div > table > tbody > tr:nth-child(3)').should('not.have.class','empty-data')
         //Click edition button, save form without modification, click on the feature to display the popup
