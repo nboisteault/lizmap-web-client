@@ -14,7 +14,7 @@ describe('Form edition', function() {
             })
         })
         cy.wait(1000)
-        cy.get('#map').matchImageSnapshot('test_kml_multilinestring')
+        cy.get('#map').matchImageSnapshot('test_kml_multilinestring', {clip: {x: 150, y:260, width: 970, height: 200}})
     })
 
     it('import kml_multipoint', function(){
@@ -26,7 +26,7 @@ describe('Form edition', function() {
             })
         })
         cy.wait(1000)
-        cy.get('#map').matchImageSnapshot('test_kml_multipoint')
+        cy.get('#map').matchImageSnapshot('test_kml_multipoint', {clip: {x: 150, y:260, width: 970, height: 200}})
     })
 
     it('import kml_multipolygon', function(){
@@ -38,7 +38,8 @@ describe('Form edition', function() {
             })
         })
         cy.wait(1000)
-        cy.get('#map').matchImageSnapshot('test_kml_multipolygon')
+        cy.get('#button-draw').click()
+        cy.get('#map').matchImageSnapshot('test_kml_multipolygon', {clip: {x: 260, y:70, width: 730, height: 580}})
     })
 
     it('import kml_polygon', function(){
@@ -50,7 +51,8 @@ describe('Form edition', function() {
             })
         })
         cy.wait(1000)
-        cy.get('#map').matchImageSnapshot('test_kml_polygon')
+        cy.get('#button-draw').click()
+        cy.get('#map').matchImageSnapshot('test_kml_polygon', {clip: {x: 120, y:50, width: 1000, height: 620}})
     })
 
     it('import kml_without_xml_header', function(){
@@ -62,7 +64,7 @@ describe('Form edition', function() {
             })
         })
         cy.wait(1000)
-        cy.get('#map').matchImageSnapshot('test_kml_without_xml_header')
+        cy.get('#map').matchImageSnapshot('test_kml_without_xml_header', {clip: {x: 613, y:350, width: 25, height: 25}})
     })
 
     it('import kml_with_xml_header', function(){
@@ -74,6 +76,6 @@ describe('Form edition', function() {
             })
         })
         cy.wait(1000)
-        cy.get('#map').matchImageSnapshot('test_kml_with_xml_header')
+        cy.get('#map').matchImageSnapshot('test_kml_with_xml_header', {clip: {x: 613, y:350, width: 25, height: 25}})
     })
 })
