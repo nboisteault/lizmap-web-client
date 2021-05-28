@@ -42,7 +42,7 @@ describe('Form edition', function() {
         cy.get('#map').matchImageSnapshot('test_kml_multipolygon', {clip: {x: 260, y:70, width: 730, height: 580}})
     })
 
-    it('import kml_polygon', function(){
+    it.only('import kml_polygon', function(){
         cy.fixture('kml_polygon.kml').then(fileContent => {
             cy.get('input[type="file"]').attachFile({
                 fileContent: fileContent.toString(),
@@ -52,7 +52,7 @@ describe('Form edition', function() {
         })
         cy.wait(1000)
         cy.get('#button-draw').click()
-        cy.get('#map').matchImageSnapshot('test_kml_polygon', {clip: {x: 120, y:50, width: 1000, height: 620}})
+        cy.get('#map').matchImageSnapshot('test_kml_polygon', {clip: {x: 120, y:50, width: 898, height: 620}})
     })
 
     it('import kml_without_xml_header', function(){
