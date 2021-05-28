@@ -3,19 +3,32 @@ describe('Form edition', function() {
         cy.visit('/index.php/view/map/?repository=testsrepository&project=time_manager')
     })
 
-    it('Project load', function(){
+    it.only('Project load', function(){
         //Three points with `2007-01-01`, `2012-01-01`, `2017-01-01` should be visible
-        cy.wait(1000)
-        cy.get('#map').matchImageSnapshot('project_load')
+        
+        cy.fixture('time_manager_all_dates.png').then((image) => {
+            console.log('@image')
+            cy.intercept('**/index.php/lizmap/service/?repository=testsrepository&project=time_manager&LAYERS**').as('images_intercepted')
+            cy.reload()
+            cy.wait('@images_intercepted', (req) => {
+                req.continue((res) => {
+                    console.log(res)
+                    expect(res.body).to.eq('@image')
+                })
+            })
+        })
     })
+    
 
     it('Time manager tool', function(){
+        cy.intercept('**/index.php/**').as('map')
         //Activate Time Manager tool in the left menu (clock icon)
         cy.get('#button-timemanager').click()
         //A slider beginning with 2007 should appear. Only 2007-01-01 point should be visible
         cy.get('#mini-dock').should('be.visible')
-        cy.wait(1000)
-        cy.get('#map').matchImageSnapshot('time_manager_2007-01-01_visible')
+        cy.get('@map').then((interception) => {
+
+        })
     })
 
     it('Time manager tool, next and previous buttons', function(){
