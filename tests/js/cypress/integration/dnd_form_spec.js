@@ -6,7 +6,6 @@ describe('Form edition', function() {
     it.only('update features', function(){
         //Click on the only one `dnd_form_geom` feature to open the popup
         cy.get('#map').click(537, 320)
-
         //Check that `Field in` field should not be empty
         cy.get('#popupcontent > div > div > div.lizmapPopupSingleFeature > div > table > tbody > tr:nth-child(2) > td').should('not.have.class','empty-data')
         
