@@ -4,9 +4,9 @@
   "description": "Test Lizmap JavaScript",
   "main": "index.js",
   "devDependencies": {
-    "cypress": "^7.1.0",
-    "cypress-file-upload": "^5.0.7",
-    "cypress-image-snapshot": "^4.0.1"
+    "cypress": "^7.4.0",
+    "cypress-image-snapshot": "^4.0.1",
+    "playwright": "^1.11.1"
   },
   "scripts": {
     "cypress:open": "cypress open"
