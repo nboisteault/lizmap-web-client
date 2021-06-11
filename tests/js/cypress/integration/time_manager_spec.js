@@ -1,5 +1,6 @@
 describe('Form edition', function() {
     beforeEach(function(){
+        cy.intercept('**/index.php/lizmap/service/?repository=testsrepository&project=time_manager&LAYERS**').as('images_intercepted')
         cy.visit('/index.php/view/map/?repository=testsrepository&project=time_manager')
     })
 
@@ -8,8 +9,6 @@ describe('Form edition', function() {
         
         cy.fixture('time_manager_all_dates.png').then((image) => {
             console.log('@image')
-            cy.intercept('**/index.php/lizmap/service/?repository=testsrepository&project=time_manager&LAYERS**').as('images_intercepted')
-            cy.reload()
             cy.wait('@images_intercepted', (req) => {
                 req.continue((res) => {
                     console.log(res)
