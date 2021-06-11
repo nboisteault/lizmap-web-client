@@ -42,7 +42,7 @@ describe('Form edition', function() {
         cy.get('#map').matchImageSnapshot('test_kml_multipolygon', {clip: {x: 260, y:70, width: 730, height: 580}})
     })
 
-    it.only('import kml_polygon', function(){
+    it('import kml_polygon', function(){
         cy.fixture('kml_polygon.kml').then(fileContent => {
             cy.get('input[type="file"]').attachFile({
                 fileContent: fileContent.toString(),
