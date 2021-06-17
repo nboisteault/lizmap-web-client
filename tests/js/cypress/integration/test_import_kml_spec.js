@@ -1,19 +1,33 @@
 describe('Form edition', function() {
+    // Link to describe how to import a file
+    // https://stackoverflow.com/questions/47074225/how-to-test-file-inputs-with-cypress
+
     beforeEach(function(){
+        // Runs before each import test in this block
         cy.visit('/index.php/view/map/?repository=testsrepository&project=test_import_kml')
+        // Click on the "Draw" button
         cy.get('#button-draw').click()
-        cy.get('#draw > div > div > lizmap-digitizing > div > div:nth-child(6) > div.digitizing-import > label').click()
     })
 
     it('import kml_multilinestring', function(){
+        // Fixture is used to load the data in the `kml_multilinestring.kml` file
+        // https://docs.cypress.io/api/commands/fixture
         cy.fixture('kml_multilinestring.kml').then(fileContent => {
+            // Put the file in the input of the popup
             cy.get('input[type="file"]').attachFile({
                 fileContent: fileContent.toString(),
                 fileName: 'kml_multilinestring.kml',
                 mimeType: 'kml'
             })
         })
+
+        // Wait for the kml file to be fully loaded
         cy.wait(1000)
+        // Take a snapshot to compare it to the `test_kml_multilinestring` snapshot
+        // Check that KML file is properly imported 
+        // Check that map is zoomed and centered to exported fixtures
+        // Clip crop the snapshot to a specific position and size
+        // https://docs.cypress.io/api/commands/screenshot#Clip
         cy.get('#map').matchImageSnapshot('test_kml_multilinestring', {clip: {x: 150, y:260, width: 970, height: 200}})
     })
 
