@@ -3,7 +3,8 @@ describe('Form edition', function() {
         // Runs before each tests in this block
         cy.visit('/index.php/view/map/?repository=testsrepository&project=popup')
         // Click on triangle
-        cy.get('#OpenLayers_Map_5_OpenLayers_ViewPort').click(480,340)
+        cy.get('#map').click(480,340)
+        cy.wait(1000)
     })
 
     it('click on the shape to show the popup', function(){
