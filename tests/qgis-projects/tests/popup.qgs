@@ -1,4 +1,4 @@
-<qgis projectname="" saveDateTime="2021-06-25T11:03:33" saveUser="nboisteault" saveUserFull="nboisteault" version="3.16.8-Hannover">
+<qgis projectname="" saveDateTime="2021-06-25T12:16:12" saveUser="nboisteault" saveUserFull="nboisteault" version="3.16.8-Hannover">
   <homePath path=""></homePath>
   <title></title>
   <autotransaction active="0"></autotransaction>
@@ -35,10 +35,10 @@
   <mapcanvas annotationsVisible="1" name="theMapCanvas">
     <units>meters</units>
     <extent>
-      <xmin>882360.63458178087603301</xmin>
-      <ymin>6246177.82400333415716887</ymin>
-      <xmax>897785.64402636897284538</xmax>
-      <ymax>6256985.77416706550866365</ymax>
+      <xmin>884829.54619272274430841</xmin>
+      <ymin>6252141.11714496370404959</ymin>
+      <xmax>886757.67237329611089081</xmax>
+      <ymax>6253492.11091542895883322</ymax>
     </extent>
     <rotation>0</rotation>
     <destinationsrs>
@@ -632,7 +632,7 @@ def my_form_open(dialog, layer, feature):
   <Bookmarks></Bookmarks>
   <ProjectViewSettings UseProjectScales="0">
     <Scales></Scales>
-    <DefaultViewExtent xmax="899599.80299262190237641" xmin="880546.47561552794650197" ymax="6256985.77416706550866365" ymin="6246177.82400333415716887">
+    <DefaultViewExtent xmax="886984.44224407675210387" xmin="884602.77632194210309535" ymax="6253492.11091542895883322" ymin="6252141.11714496370404959">
       <spatialrefsys>
         <wkt>PROJCS["RGF93 / Lambert-93",GEOGCS["RGF93",DATUM["Reseau_Geodesique_Francais_1993",SPHEROID["GRS 1980",6378137,298.257222101,AUTHORITY["EPSG","7019"]],TOWGS84[0,0,0,0,0,0,0],AUTHORITY["EPSG","6171"]],PRIMEM["Greenwich",0,AUTHORITY["EPSG","8901"]],UNIT["degree",0.0174532925199433,AUTHORITY["EPSG","9122"]],AUTHORITY["EPSG","4171"]],PROJECTION["Lambert_Conformal_Conic_2SP"],PARAMETER["standard_parallel_1",49],PARAMETER["standard_parallel_2",44],PARAMETER["latitude_of_origin",46.5],PARAMETER["central_meridian",3],PARAMETER["false_easting",700000],PARAMETER["false_northing",6600000],UNIT["metre",1,AUTHORITY["EPSG","9001"]],AXIS["X",EAST],AXIS["Y",NORTH],AUTHORITY["EPSG","2154"]]</wkt>
         <proj4>+proj=lcc +lat_1=49 +lat_2=44 +lat_0=46.5 +lon_0=3 +x_0=700000 +y_0=6600000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs</proj4>
