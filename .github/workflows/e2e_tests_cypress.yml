@@ -38,6 +38,8 @@ jobs:
       # and run all Cypress tests
       - name: Cypress run
         uses: cypress-io/github-action@v2
+        env:
+          DEBUG: '@cypress/github-action'
         with:
           browser: chrome
           headless: true
