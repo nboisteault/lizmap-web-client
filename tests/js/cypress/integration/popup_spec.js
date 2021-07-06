@@ -2,6 +2,7 @@ describe('Form edition', function() {
     beforeEach(function(){
         // Runs before each tests in this block
         cy.visit('/index.php/view/map/?repository=testsrepository&project=popup')
+        cy.wait(10000)
         // Click on triangle
         cy.get('#map').click(480,340)
     })
