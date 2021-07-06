@@ -44,6 +44,13 @@ jobs:
           working-directory: tests/js
           wait-on: http://localhost:8130
 
+      - name: Save screenshots if a test fails
+        uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: tests/js/cypress/screenshots
+
       - name: Display Lizmap errors.log and fail if not empty
         run: |
           if [ -s "lizmap/var/log/errors.log" ]; then
