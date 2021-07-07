@@ -3,6 +3,9 @@ describe('Form edition', function() {
         // Runs before each tests in this block
         cy.visit('/index.php/view/map/?repository=testsrepository&project=popup')
         cy.wait(1000)
+        cy.get('#layer-dnd_popup button').click()
+        cy.get('#layer-dnd_popup button').click()
+        cy.wait(1000)
         // Click on triangle
         cy.get('#map').click(480,340)
     })
