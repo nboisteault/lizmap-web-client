@@ -5,6 +5,7 @@ describe('Form edition', function() {
         cy.wait(1000)
         cy.get('#layer-dnd_popup button').click()
         cy.get('#layer-dnd_popup button').click()
+        cy.get('#layer-dnd_popup .expander').click()
         cy.wait(2000)
         // Click on triangle
         cy.get('#map').click(480,340)
