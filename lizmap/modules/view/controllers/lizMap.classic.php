@@ -404,7 +404,6 @@ class lizMapCtrl extends jController
                                     array(
                                         'repository' => $lrep->getKey(),
                                         'project' => $project,
-                                        'mtime' => filemtime($filename),
                                         'path' => $jsRelPath,
                                     )
                                 );
