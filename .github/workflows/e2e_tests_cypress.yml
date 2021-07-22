@@ -39,7 +39,7 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
-          browser: firefox
+          browser: chrome
           headless: false
           working-directory: tests/js
           wait-on: http://localhost:8130
