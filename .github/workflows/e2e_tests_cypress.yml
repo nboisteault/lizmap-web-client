@@ -49,10 +49,17 @@ jobs:
 
       - name: Save screenshots as artifacts if a test fails to ease debug
         uses: actions/upload-artifact@v2
-        if: failure()
+        if: always()
         with:
           name: cypress-screenshots
           path: tests/js/cypress/screenshots
+
+      - name: Save videos as artifacts if a test fails to ease debug
+        uses: actions/upload-artifact@v2
+        if: always()
+        with:
+          name: cypress-videos
+          path: tests/js/cypress/videos
 
       - name: Display Lizmap errors.log and fail if not empty
         run: |
