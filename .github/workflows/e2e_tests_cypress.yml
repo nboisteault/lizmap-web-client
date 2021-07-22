@@ -41,6 +41,7 @@ jobs:
         with:
           browser: chrome
           headless: false
+          headed: true
           working-directory: tests/js
           wait-on: http://localhost:8130
           # Some tests might pass in local but not in CI, we don't add them below (e.g. popup_spec.js)
