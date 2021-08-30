@@ -1270,6 +1270,7 @@ var lizMap = function() {
         controls:[
           new OpenLayers.Control.Navigation({mouseWheelOptions: {interval: 100}})
         ]
+        , zoomMethod: null
         ,tileManager: null // prevent bug with OL 2.13 : white tiles on panning back
         ,eventListeners:{
          zoomend: function(){

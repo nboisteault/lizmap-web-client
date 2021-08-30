@@ -8,6 +8,9 @@ import DoubleClickZoom from 'ol/interaction/DoubleClickZoom';
 import { defaults as defaultInteractions } from 'ol/interaction.js';
 import { Kinetic } from "ol";
 
+import TileLayer from 'ol/layer/Tile';
+import { OSM } from 'ol/source';
+
 /** Class initializing Openlayers Map. */
 export default class Map extends olMap {
 
@@ -34,30 +37,37 @@ export default class Map extends olMap {
             target: 'newOlMap'
         });
 
+        this.addLayer(new TileLayer({
+            source: new OSM(),
+        }));
+
         this._newOlMap = false;
 
         this._refreshOL2View = () => {
-            // This refresh OL2 view and layers
-            mainLizmap.lizmap3.map.setCenter(
-                this.getView().getCenter(),
-                this.getView().getZoom()
-            );
+            if (this._moveInitiator !== "OL2"){
+                // This refresh OL2 view and layers
+                mainLizmap.lizmap3.map.setCenter(
+                    this.getView().getCenter(),
+                    this.getView().getZoom()
+                );
+            }
         };
+
+        this._moveInitiator = null;
 
         // Sync new OL view with OL2 view
         mainLizmap.lizmap3.map.events.on({
-            moveend: () => {
-                // Remove moveend listener and add it after animate ends
-                // to avoid extra sync
-                this.un('moveend', this._refreshOL2View);
+            move: () => {
+                this._moveInitiator = "OL2";
 
                 // Sync center
                 this.getView().animate({
                     center: this._lizmap3Center,
                     zoom: mainLizmap.lizmap3.map.getZoom(),
                     duration: 0
-                }, () => this.on('moveend', this._refreshOL2View));
-
+                }, () => { });
+            },
+            moveend: () => {
                 mainEventDispatcher.dispatch('map.moveend');
             },
             zoomstart: (evt) => {
