@@ -11,10 +11,15 @@ import { Kinetic } from "ol";
 import TileLayer from 'ol/layer/Tile';
 import { OSM } from 'ol/source';
 
+import { get as getProjection } from 'ol/proj.js';
+
 /** Class initializing Openlayers Map. */
 export default class Map extends olMap {
 
     constructor() {
+        const proj = getProjection(mainLizmap.projection === 'EPSG:900913' ? 'EPSG:3857' : mainLizmap.projection);
+        proj.setExtent(mainLizmap.lizmap3.map.maxExtent.toArray());
+
         super({
             controls: [], // disable default controls
             interactions: defaultInteractions({
@@ -29,9 +34,8 @@ export default class Map extends olMap {
                 resolutions: mainLizmap.lizmap3.map.baseLayer.resolutions,
                 constrainResolution: true,
                 center: [mainLizmap.lizmap3.map.getCenter().lon, mainLizmap.lizmap3.map.getCenter().lat],
-                projection: mainLizmap.projection === 'EPSG:900913' ? 'EPSG:3857' : mainLizmap.projection,
+                projection: proj,
                 enableRotation: false,
-                extent: mainLizmap.lizmap3.map.restrictedExtent.toArray(),
                 constrainOnlyCenter: true // allow view outside the restricted extent when zooming
             }),
             target: 'newOlMap'
