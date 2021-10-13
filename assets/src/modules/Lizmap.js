@@ -13,6 +13,8 @@ import { register } from 'ol/proj/proj4';
 
 import proj4 from 'proj4';
 
+import { jsPDF } from "jspdf";
+
 export default class Lizmap {
 
     constructor() {
@@ -47,6 +49,21 @@ export default class Lizmap {
                 this.snapping = new Snapping();
                 this.draw = new Draw();
                 this.layers = new Layers();
+
+                // Add vector for print test
+                const geojsonparser = new OpenLayers.Format.GeoJSON();
+
+                const vectorFeatures = geojsonparser.read(`{
+"type": "FeatureCollection",
+"name": "print",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:EPSG::2154" } },
+"features": [
+{ "type": "Feature", "properties": { "id": 1 }, "geometry": { "type": "Polygon", "coordinates": [ [ [ 768955.705124986940064, 6281513.548335827887058 ], [ 767446.735110709327273, 6279336.320172369480133 ], [ 769591.628202432533726, 6278032.138945744372904 ], [ 771876.639938338776119, 6278032.138945744372904 ], [ 772372.444371601333842, 6279595.000746245495975 ], [ 768955.705124986940064, 6281513.548335827887058 ] ] ] } }
+]
+}`);
+                const vectorLayer = new OpenLayers.Layer.Vector("printLayer");
+                vectorLayer.addFeatures(vectorFeatures);
+                this._lizmap3.map.addLayer(vectorLayer);
             }
         });
     }
@@ -134,5 +151,53 @@ export default class Lizmap {
      */
     transform(coordinate, source, destination) {
         return transformOL(coordinate, source, destination);
+    }
+
+    print(){
+        const mapCanvas = document.createElement('canvas');
+        mapCanvas.width = 297 * 72 /25.4;
+        mapCanvas.height = 210 * 72 / 25.4;
+        const mapContext = mapCanvas.getContext('2d');
+        const pdf = new jsPDF('landscape', undefined, 'a4');
+
+        Array.prototype.forEach.call(
+            // document.querySelectorAll('.olLayerDiv canvas'),
+            // document.querySelectorAll('.olTileImage'),
+            document.querySelectorAll('.olLayerDiv canvas, .olLayerDiv .olTileImage'),
+            function (canvasOrImg) {
+                if (canvasOrImg.width > 0) {
+                    // const opacity = canvas.parentNode.style.opacity;
+                    // mapContext.globalAlpha = opacity === '' ? 1 : Number(opacity);
+                    // const transform = canvas.style.transform;
+                    // // Get the transform parameters from the style's transform matrix
+                    // const matrix = transform
+                    //     .match(/^matrix\(([^\(]*)\)$/)[1]
+                    //     .split(',')
+                    //     .map(Number);
+                    // // Apply the transform to the export map context
+                    // CanvasRenderingContext2D.prototype.setTransform.apply(
+                    //     mapContext,
+                    //     matrix
+                    // );
+                    // mapContext.drawImage(canvas, 0, 0);
+
+                    pdf.addImage(
+                        canvasOrImg,
+                        'PNG',
+                        0,
+                        0,
+                        297,
+                        210
+                    );
+                }
+            }
+        );
+
+        pdf.save('map.pdf');
+        // Reset original map size
+        // map.setSize(size);
+        // map.getView().setResolution(viewResolution);
+        // exportButton.disabled = false;
+        // document.body.style.cursor = 'auto';
     }
 }
