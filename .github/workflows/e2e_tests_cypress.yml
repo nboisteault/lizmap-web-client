@@ -30,21 +30,11 @@ jobs:
       - name: Install Lizmap as a QGIS Server plugin
         run: cd tests && ./add_server_plugins.sh
 
-      - name: Pull docker images
-        run: cd tests && ./run-docker pull
-
-      # In this step, this action saves a list of existing images,
-      # the cache is created without them in the post run.
-      # It also restores the cache if it exists.
-      - uses: satackey/action-docker-layer-caching@v0.0.11
-        # Ignore the failure of a step and avoid terminating the job.
-        continue-on-error: true
-
       - name: Build and start docker images
         run: cd tests && ./run-docker up --build -d
 
       - name: Wait docker images ready and install Lizmap
-        run: cd tests && sleep 30 && ./lizmap-ctl install
+        run: cd tests && sleep 25 && ./lizmap-ctl install
 
       - name: Load SQL data
         run: cd tests/qgis-projects/tests && ./load_sql.sh
