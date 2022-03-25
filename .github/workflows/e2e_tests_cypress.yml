@@ -57,7 +57,7 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
-          command: find cypress/integration/ -name '*.js' | parallel -j2 --group  npx cypress run --spec {}
+          command: /bin/bash -c '/usr/bin/find cypress/integration/ -name '*.js' | parallel -j2 --group  npx cypress run --spec {}'
           working-directory: tests/end2end
           spec: cypress/integration/*-ghaction.js
           wait-on: http://localhost:8130
