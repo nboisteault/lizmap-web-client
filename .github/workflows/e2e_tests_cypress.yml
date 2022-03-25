@@ -58,7 +58,7 @@ jobs:
         uses: cypress-io/github-action@v2
         with:
           browser: chrome
-          headless: true
+          headless: false
           working-directory: tests/end2end
           spec: cypress/integration/*-ghaction.js
           wait-on: http://localhost:8130
