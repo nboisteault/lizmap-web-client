@@ -32,7 +32,7 @@ describe('Drag and drop from', function () {
         cy.wait(300)
 
         cy.get('#attribute-table-panel-dnd_form_geom > div.lizmapPopupSingleFeature > div > table > tbody > tr:nth-child(2) > td').should('not.be.empty')
-        cy.get('#attribute-table-panel-dnd_form_geom > div.lizmapPopupSingleFeature > div > table > tbody > tr:nth-child(3) > td').should('not.be.empty')
+        cy.get('#attribute-table-panel-dnd_form_geom > div.lizmapPopupSingleFeature > div > table > tbody > tr:nth-child(3) > td').should('be.empty')
 
         // Assert data has changed after form submission w modification
         cy.get('#attribute-layer-table-dnd_form_geom .feature-edit').click({ force: true })
